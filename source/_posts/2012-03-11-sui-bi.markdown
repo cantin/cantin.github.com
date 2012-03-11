@@ -1,0 +1,16 @@
+---
+layout: post
+title: "随笔"
+date: 2012-03-11 10:46
+comments: true
+categories:  'mysql'
+---
+###mysql配置
+在mac下默认是没有my.conf的，如果需要定制的话，可以
+到/usr/local/Cellar/mysql/5.XX/support-file/目录下
+拷贝一份适合的.conf文件到/etc/my.conf
+  
+###mysql默认编码
+mysql在mac下的默认编码是utf-8（在我机子上是），
+可以使用show varibles like 'character_set%';来查询
+

@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-03-11T21:45:01+08:00</updated>
+  <updated>2012-03-11T21:51:24+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -21,8 +21,9 @@
     <content type="html"><![CDATA[<h2>前言</h2>
 
 <p>放假的晚上，窝在宿舍，懒懒的。无聊之余就想写一下之前学过的
-javascript的observer，免得自己将来真的忘了。
-ps：现在真的快忘了。。。。</p>
+javascript的observer，免得自己将来真的忘了。</p>
+
+<p>ps：现在真的快忘了。。。。</p>
 
 <h2>javascript与observer</h2>
 
@@ -39,8 +40,9 @@ ps：现在真的快忘了。。。。</p>
 
 <h4>Event对象</h4>
 
-<p>首先，我们需要一个Event对象来存放事件触发后执行的handler与它的scope。
-event构造如下：</p>
+<p>首先，我们需要一个Event对象来存放事件触发后执行的handler与它的scope。</p>
+
+<p>event构造如下：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -167,13 +169,15 @@ fireEvent是在model在内部调用，用以调用在view在model注册的handle
 on是提供对外的接口，用来让view调用，注册view的handler，
 add是model事件函数示例，在让model发生改变的方法中的最下面调用fireEvent，从而达到调用handler的目的。</p>
 
-<p>ps:不负责任的说，Event对象的options参数是我在写这篇文章时候才加进去的，没有经过任何测试，哇哈哈。
-ps:再不负责的说，上述方法都是我凭印象写的，正确性应该是可以保证的吧····</p>
+<p>ps:不负责任的说，Event对象的options参数是我在写这篇文章时候才加进去的，没有经过任何测试，哇哈哈。</p>
+
+<p>ps:再不负责的说，上述方法都是我凭印象写的，正确性应该是可以保证的吧····</p>
 
 <h4>view的写法</h4>
 
-<p>在view中我们需要向model中注册当model发生改变是自动执行的函数，也就是handler.
-示例代码如下：</p>
+<p>在view中我们需要向model中注册当model发生改变是自动执行的函数，也就是handler.</p>
+
+<p>示例代码如下：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -216,9 +220,11 @@ ps:再不负责的说，上述方法都是我凭印象写的，正确性应该�
 
 <p>observer的好处在于，当model（或者是其他对象）变化的时候，它能通知到其他注册在上面的对象也发生变化。
 这样一方面是全部对象更新的很及时，另一方面是解耦了对象，model（被观察对象？）与view（观察对象？）只需要通过
-model的几个函数交互，而不需要知道其他对象的实现细节,同时view可以注册多个handler到model中去，可扩展性比较好。
-ps:我还是不知道model与view是谁观察谁·····
-ps：文笔感觉还是很不行，见谅见谅。</p>
+model的几个函数交互，而不需要知道其他对象的实现细节,同时view可以注册多个handler到model中去，可扩展性比较好。</p>
+
+<p>ps:我还是不知道model与view是谁观察谁·····</p>
+
+<p>ps：文笔感觉还是很不行，见谅见谅。</p>
 ]]></content>
   </entry>
   

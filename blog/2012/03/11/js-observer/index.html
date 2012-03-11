@@ -149,8 +149,8 @@ javascript的observer，免得自己将来真的忘了。</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>其中event为数组，存放着当model的事件，当这些事件触发时，会调用listener中的handler。
-listener是存放handler的一个对象（或者近似的认为是hash）。
+<p>其中event为数组，存放着当model的事件，当这些事件触发时，会调用listener中对应数组的event对象。
+listener是存放event对象的一个对象（或者近似的认为是hash）。
 在model里还需要有如下方法：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>

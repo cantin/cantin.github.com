@@ -53,8 +53,8 @@ event构造如下：
  }
 ```
 
-其中event为数组，存放着当model的事件，当这些事件触发时，会调用listener中的handler。
-listener是存放handler的一个对象（或者近似的认为是hash）。
+其中event为数组，存放着当model的事件，当这些事件触发时，会调用listener中对应数组的event对象。
+listener是存放event对象的一个对象（或者近似的认为是hash）。
 在model里还需要有如下方法：
 
 ```js

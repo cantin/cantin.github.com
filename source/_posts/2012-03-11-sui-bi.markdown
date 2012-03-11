@@ -13,4 +13,3 @@ categories:  'mysql'
 ###mysql默认编码
 mysql在mac下的默认编码是utf-8（在我机子上是），
 可以使用show varibles like 'character_set%';来查询
-

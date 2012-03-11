@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mysql | cantin's blog]]></title>
+  <link href="http://cantin.github.com/blog/categories/mysql/atom.xml" rel="self"/>
+  <link href="http://cantin.github.com/"/>
+  <updated>2012-03-11T14:05:06+08:00</updated>
+  <id>http://cantin.github.com/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[随笔]]></title>
+    <link href="http://cantin.github.com/blog/2012/03/11/sui-bi/"/>
+    <updated>2012-03-11T10:46:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/03/11/sui-bi</id>
+    <content type="html"><![CDATA[<h3>mysql配置</h3>
+
+<p>在mac下默认是没有my.conf的，如果需要定制的话，可以
+到/usr/local/Cellar/mysql/5.XX/support-file/目录下
+拷贝一份适合的.conf文件到/etc/my.conf</p>
+
+<h3>mysql默认编码</h3>
+
+<p>mysql在mac下的默认编码是utf-8（在我机子上是），
+可以使用show varibles like 'character_set%';来查询</p>
+]]></content>
+  </entry>
+  
+</feed>

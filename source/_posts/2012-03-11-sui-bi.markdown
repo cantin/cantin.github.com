@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "随笔"
+title: "myql自定义配置"
 date: 2012-03-11 10:46
 comments: true
 categories:  'mysql'

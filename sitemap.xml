@@ -1,23 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
-        <loc>http://cantin.github.com/blog/2012/03/06/test/</loc>
-        <lastmod>2012-03-06T22:30:38+08:00</lastmod>
-    </url>
-    <url>
         <loc>http://cantin.github.com/blog/2012/03/11/sui-bi/</loc>
-        <lastmod>2012-03-11T20:41:30+08:00</lastmod>
+        <lastmod>2012-03-15T22:28:52+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/2012/03/11/js-observer/</loc>
         <lastmod>2012-03-11T21:54:38+08:00</lastmod>
     </url>
     <url>
+        <loc>http://cantin.github.com/blog/2012/03/15/rails-generator/</loc>
+        <lastmod>2012-03-15T22:59:35+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://cantin.github.com/blog/archives/</loc>
-        <lastmod>2012-03-11T21:54:38+08:00</lastmod>
+        <lastmod>2012-03-15T22:59:35+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/</loc>
-        <lastmod>2012-03-11T21:54:38+08:00</lastmod>
+        <lastmod>2012-03-15T22:59:35+08:00</lastmod>
     </url>
 </urlset>

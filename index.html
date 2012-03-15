@@ -9,8 +9,8 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="前言 放假的晚上，窝在宿舍，懒懒的。无聊之余就想写一下之前学过的
-javascript的observer，免得自己将来真的忘了。 ps：现在真的快忘了。。。。 javascript与observer 为什么需要observer 在编写js的时候，通常会遇到这样的问题。 &hellip;">
+  <meta name="description" content="前言 generator在rails开发中是十分好用的工具,
+今晚看了一下rails的generator，闲来无事便将基本的记下来。 guides的链接为http://guides.rubyonrails.org/generators.html rails3. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +71,101 @@ javascript的observer，免得自己将来真的忘了。 ps：现在真的快�
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2012/03/15/rails-generator/">Generator on Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T22:27:00+08:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/15/rails-generator/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>generator在rails开发中是十分好用的工具,
+今晚看了一下rails的generator，闲来无事便将基本的记下来。</p>
+
+<p>guides的链接为<a href="http://guides.rubyonrails.org/generators.html">http://guides.rubyonrails.org/generators.html</a></p>
+
+<p>rails3.0以后的generator是建立在Thor这个gem上的，github的链接为<a href="https://github.com/wycats/thor">https://github.com/wycats/thor</a></p>
+
+<h3>生成generator</h3>
+
+<p>进入rails项目，在终端下输入下列命令:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rails</span> <span class="n">generate</span> <span class="n">generator</span> <span class="n">generator_name</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成文件如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/lib/generator/generator_name/USAGE
+</span><span class='line'>/lib/generator/generator_name/generator_name.rb
+</span><span class='line'>/lib/generator/generator_name/templates/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中generator_name.rb中是执行generate命令时运行的文件，
+USAGE是这个generator的说明，
+templates目录下是执行这个generator是需要用到的文件,可在generator_name.rb中改变</p>
+
+<p>若generator_name.rb中有copy_file这个方法
+当执行generator命令时，此方法会找到templates下的相应文件copy到rails项目中</p>
+
+<p>具体可以参考guides</p>
+
+<h3>配置generator</h3>
+
+<p>在rails中可以在config/applications.rb配置generator，如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">generators</span> <span class="k">do</span> <span class="o">|</span><span class="n">g</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">orm</span>             <span class="ss">:active_record</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">template_engine</span> <span class="ss">:erb</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">test_framework</span>  <span class="ss">:test_unit</span><span class="p">,</span> <span class="ss">:fixture</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>后记</h3>
+
+<p>目前还未有用到generator的机会，所以写的实在不是很详细，等以后再来完善吧。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2012/03/11/js-observer/">Js与observer</a></h1>
     
     
@@ -88,6 +183,8 @@ javascript的observer，免得自己将来真的忘了。 ps：现在真的快�
 
 
 <time datetime="2012-03-11T20:41:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/11/js-observer/#disqus_thread">Comments</a>
         
       </p>
     
@@ -313,7 +410,7 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/03/11/sui-bi/">随笔</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/03/11/sui-bi/">Myql自定义配置</a></h1>
     
     
       <p class="meta">
@@ -330,6 +427,8 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
 
 
 <time datetime="2012-03-11T10:46:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/11/sui-bi/#disqus_thread">Comments</a>
         
       </p>
     
@@ -353,70 +452,6 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/06/test/">Test</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-06T21:42:00+08:00" pubdate data-updated="true">Mar 6<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>this.is something for test my blog.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="nb">puts</span> <span class="s1">&#39;hello world&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="n">system</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;hello world&quot;</span><span class="o">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="n">printf</span><span class="p">(</span><span class="err">&#39;</span><span class="n">hello</span> <span class="n">world</span><span class="err">&#39;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>something for test</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
     <a href="/blog/archives">Blog Archives</a>
@@ -430,21 +465,28 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/15/rails-generator/">generator on rails</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/11/js-observer/">js与observer</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/03/11/sui-bi/">随笔</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/06/test/">test</a>
+        <a href="/blog/2012/03/11/sui-bi/">myql自定义配置</a>
       </li>
     
   </ul>
 </section>
 
 
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/guest?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/guest">My Delicious Bookmarks &raquo;</a></p>
+</section>
 
 
 
@@ -461,6 +503,19 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
 
 </footer>
   
+
+<script type="text/javascript">
+      var disqus_shortname = 'sss';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 

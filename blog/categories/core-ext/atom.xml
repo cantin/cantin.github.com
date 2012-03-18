@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: core-ext | cantin's blog]]></title>
+  <link href="http://cantin.github.com/blog/categories/core-ext/atom.xml" rel="self"/>
+  <link href="http://cantin.github.com/"/>
+  <updated>2012-03-18T22:16:52+08:00</updated>
+  <id>http://cantin.github.com/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[monkeypatch with hash and array]]></title>
+    <link href="http://cantin.github.com/blog/2012/03/18/hash-array-core-ext/"/>
+    <updated>2012-03-18T22:00:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/03/18/hash-array-core-ext</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>几个月前，工作中需要判断一个一个hash中是否包含了另一个hash/array(在更深层次上)，
+但ruby中没有提供这样的方法，所以在涛哥的指导下，我写了下列两个方法来
+实现这个功能</p>
+
+<h3>array</h3>
+
+<p>array的方法如下：</p>
+
+<p>```ruby
+class Array
+  def contains? array</p>
+
+<pre><code>array.each do |value|      
+  flag = false
+  self.each do |v|
+    if  value.class == v.class &amp;&amp; v.respond_to?(:contains?)
+      flag = true if v.contains?(value)
+    else
+      flag = true if v == value       
+    end
+  end
+  return false unless flag
+end
+
+true
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>hash</h3>
+
+<p>hash的方法如下：</p>
+
+<p>```ruby
+class Hash
+  def contains?(hash)</p>
+
+<pre><code>hash.each do |key, value|  
+  return false unless include?(key)
+
+  if value.respond_to?(:contains?)
+    return false unless self[key].contains?(value)
+  else
+    return false unless value == self[key] 
+  end
+end
+
+true
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>后记</h3>
+
+<p>第一次写ruby的extsion，印象还是很深刻的。</p>
+]]></content>
+  </entry>
+  
+</feed>

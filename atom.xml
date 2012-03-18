@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-03-16T00:23:49+08:00</updated>
+  <updated>2012-03-18T22:16:52+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -12,6 +12,101 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[monkeypatch with hash and array]]></title>
+    <link href="http://cantin.github.com/blog/2012/03/18/hash-array-core-ext/"/>
+    <updated>2012-03-18T22:00:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/03/18/hash-array-core-ext</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>几个月前，工作中需要判断一个一个hash中是否包含了另一个hash/array(在更深层次上)，
+但ruby中没有提供这样的方法，所以在涛哥的指导下，我写了下列两个方法来
+实现这个功能</p>
+
+<h3>array</h3>
+
+<p>array的方法如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Array</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">contains?</span> <span class="n">array</span>
+</span><span class='line'>    <span class="n">array</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">flag</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span>  <span class="n">value</span><span class="o">.</span><span class="n">class</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">class</span> <span class="o">&amp;&amp;</span> <span class="n">v</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:contains?</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">flag</span> <span class="o">=</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">contains?</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>          <span class="n">flag</span> <span class="o">=</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">value</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="n">flag</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>hash</h3>
+
+<p>hash的方法如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hash</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">contains?</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">hash</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="kp">include</span><span class="p">?(</span><span class="n">key</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:contains?</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="nb">self</span><span class="o">[</span><span class="n">key</span><span class="o">].</span><span class="n">contains?</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="n">value</span> <span class="o">==</span> <span class="nb">self</span><span class="o">[</span><span class="n">key</span><span class="o">]</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>后记</h3>
+
+<p>第一次写ruby的extsion，印象还是很深刻的。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[generator on rails]]></title>

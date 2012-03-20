@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: spork | cantin's blog]]></title>
+  <link href="http://cantin.github.com/blog/categories/spork/atom.xml" rel="self"/>
+  <link href="http://cantin.github.com/"/>
+  <updated>2012-03-20T22:42:46+08:00</updated>
+  <id>http://cantin.github.com/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[spork reload model]]></title>
+    <link href="http://cantin.github.com/blog/2012/03/20/spork-reload-model/"/>
+    <updated>2012-03-20T22:33:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/03/20/spork-reload-model</id>
+    <content type="html"><![CDATA[<h4>spork的问题</h4>
+
+<p>使用spork1.0.0rc2在为测试加速时，并不会每次都reload model。
+也就是说，使用spork时，如果你model有了一丝改变，那就需要重启spork。
+老实说，这相当不方便。</p>
+
+<h4>解决方法1</h4>
+
+<p>(使用的是rspec)在spec_helper.rb里面添加如下代码：</p>
+
+<p>```ruby
+Spork.each_run do
+  require 'factory_girl_rails'
+  # reload all the models
+  Dir["#{Rails.root}/app/models/<em>*/</em>.rb"].each do |model|</p>
+
+<pre><code>load model
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>解决方法2</h3>
+
+<p>前提是使用rspec与factory_girl_rails
+在gemfile里面添加：</p>
+
+<p><code>ruby
+gem 'factory_girl_rails', require: false
+</code></p>
+
+<p>在spec_helper.rb里添加：</p>
+
+<p><code>ruby
+Spork.each_run do
+  require 'factory_girl_rails'
+end
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

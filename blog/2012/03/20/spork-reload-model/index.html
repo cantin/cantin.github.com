@@ -5,13 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>myql自定义配置 - cantin's blog</title>
+  <title>spork reload model - cantin's blog</title>
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="mysql配置 在mac下默认是没有my.conf的，如果需要定制的话，可以
-到/usr/local/Cellar/mysql/5.XX/support-file/目录下
-拷贝一份适合的.conf文件到/etc/my.conf mysql默认编码 mysql在mac下的默认编码是utf-8（ &hellip;">
+  <meta name="description" content="spork的问题 使用spork1.0.0rc2在为测试加速时，并不会每次都reload model。
+也就是说，使用spork时，如果你model有了一丝改变，那就需要重启spork。
+老实说，这相当不方便。 解决方法1 (使用的是rspec)在spec_helper.rb里面添加如下代码： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://cantin.github.com/blog/2012/03/11/sui-bi">
+  <link rel="canonical" href="http://cantin.github.com/blog/2012/03/20/spork-reload-model">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">Myql自定义配置</h1>
+      <h1 class="entry-title">Spork Reload Model</h1>
     
     
       <p class="meta">
@@ -85,7 +85,7 @@
   
 
 
-<time datetime="2012-03-11T10:46:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+<time datetime="2012-03-20T22:33:00+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -94,16 +94,53 @@
   </header>
 
 
-<div class="entry-content"><h3>mysql配置</h3>
+<div class="entry-content"><h4>spork的问题</h4>
 
-<p>在mac下默认是没有my.conf的，如果需要定制的话，可以
-到/usr/local/Cellar/mysql/5.XX/support-file/目录下
-拷贝一份适合的.conf文件到/etc/my.conf</p>
+<p>使用spork1.0.0rc2在为测试加速时，并不会每次都reload model。
+也就是说，使用spork时，如果你model有了一丝改变，那就需要重启spork。
+老实说，这相当不方便。</p>
 
-<h3>mysql默认编码</h3>
+<h4>解决方法1</h4>
 
-<p>mysql在mac下的默认编码是utf-8（在我机子上是），
-可以使用show varibles like &#8216;character_set%&#8217;;来查询</p>
+<p>(使用的是rspec)在spec_helper.rb里面添加如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">each_run</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span><span class='line'>  <span class="c1"># reload all the models</span>
+</span><span class='line'>  <span class="no">Dir</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/app/models/**/*.rb&quot;</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">model</span><span class="o">|</span>
+</span><span class='line'>    <span class="nb">load</span> <span class="n">model</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>解决方法2</h3>
+
+<p>前提是使用rspec与factory_girl_rails
+在gemfile里面添加：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;factory_girl_rails&#39;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在spec_helper.rb里添加：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">each_run</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -126,12 +163,12 @@
   
 
 
-<time datetime="2012-03-11T10:46:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+<time datetime="2012-03-20T22:33:00+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/mysql/'>mysql</a>
+    <a class='category' href='/blog/categories/spork/'>spork</a>
   
 </span>
 
@@ -140,7 +177,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/03/11/sui-bi/" data-via="" data-counturl="http://cantin.github.com/blog/2012/03/11/sui-bi/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/03/20/spork-reload-model/" data-via="" data-counturl="http://cantin.github.com/blog/2012/03/20/spork-reload-model/" >Tweet</a>
   
   
   
@@ -149,8 +186,8 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2012/03/18/hash-array-core-ext/" title="Previous Post: monkeypatch with hash and array">&laquo; monkeypatch with hash and array</a>
       
-        <a class="basic-alignment right" href="/blog/2012/03/11/js-observer/" title="Next Post: js与observer">js与observer &raquo;</a>
       
     </p>
   </footer>
@@ -224,8 +261,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://cantin.github.com/blog/2012/03/11/sui-bi/';
-        var disqus_url = 'http://cantin.github.com/blog/2012/03/11/sui-bi/';
+        var disqus_identifier = 'http://cantin.github.com/blog/2012/03/20/spork-reload-model/';
+        var disqus_url = 'http://cantin.github.com/blog/2012/03/20/spork-reload-model/';
         var disqus_script = 'embed.js';
       
     (function () {

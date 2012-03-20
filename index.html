@@ -9,23 +9,9 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="前言 几个月前，工作中需要判断一个一个hash中是否包含了另一个hash/array(在更深层次上)，
-但ruby中没有提供这样的方法，所以在涛哥的指导下，我写了下列两个方法来
-实现这个功能 array array的方法如下： 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15 &hellip;">
+  <meta name="description" content="spork的问题 使用spork1.0.0rc2在为测试加速时，并不会每次都reload model。
+也就是说，使用spork时，如果你model有了一丝改变，那就需要重启spork。
+老实说，这相当不方便。 解决方法1 (使用的是rspec)在spec_helper.rb里面添加如下代码： 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +66,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/20/spork-reload-model/">Spork Reload Model</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-20T22:33:00+08:00" pubdate data-updated="true">Mar 20<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/20/spork-reload-model/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h4>spork的问题</h4>
+
+<p>使用spork1.0.0rc2在为测试加速时，并不会每次都reload model。
+也就是说，使用spork时，如果你model有了一丝改变，那就需要重启spork。
+老实说，这相当不方便。</p>
+
+<h4>解决方法1</h4>
+
+<p>(使用的是rspec)在spec_helper.rb里面添加如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">each_run</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span><span class='line'>  <span class="c1"># reload all the models</span>
+</span><span class='line'>  <span class="no">Dir</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/app/models/**/*.rb&quot;</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">model</span><span class="o">|</span>
+</span><span class='line'>    <span class="nb">load</span> <span class="n">model</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>解决方法2</h3>
+
+<p>前提是使用rspec与factory_girl_rails
+在gemfile里面添加：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;factory_girl_rails&#39;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在spec_helper.rb里添加：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">each_run</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -602,6 +672,10 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/20/spork-reload-model/">spork reload model</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/03/18/hash-array-core-ext/">monkeypatch with hash and array</a>

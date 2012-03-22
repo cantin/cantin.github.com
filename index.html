@@ -9,9 +9,9 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="spork的问题 使用spork1.0.0rc2在为测试加速时，并不会每次都reload model。
-也就是说，使用spork时，如果你model有了一丝改变，那就需要重启spork。
-老实说，这相当不方便。 解决方法1 (使用的是rspec)在spec_helper.rb里面添加如下代码： 1 &hellip;">
+  <meta name="description" content="前言 最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
+顺带一提，这本书真的相当不错。 object js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
+类型。其中基本类型是以栈存放， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,136 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/22/js_function/">New-post</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T22:49:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/22/js_function/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
+顺带一提，这本书真的相当不错。</p>
+
+<h3>object</h3>
+
+<p>js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
+类型。其中基本类型是以栈存放，而object是以堆存放。</p>
+
+<p>在js中object就是key: value的集合。</p>
+
+<p>function对象也是object对象，但是他们都是以function关键字定义滴。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nb">Object</span> <span class="c1">//function Object() {};</span>
+</span><span class='line'>  <span class="nb">Function</span> <span class="c1">//function Function() {};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每一个object里面都会有个constructor的key，value一般就是object的function引用。
+例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obkect</span><span class="p">();</span>
+</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Object() {}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>function, new 与Object, Function</h3>
+
+<p> function与Function是不同的，function是关键字，而Function是对象。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ss&#39;</span> <span class="p">}</span>
+</span><span class='line'><span class="nx">s</span>  <span class="c1">//function s() { this.qq = &#39;ss&#39; }</span>
+</span><span class='line'><span class="nx">s</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Function() {}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所有的function对象都是由Function这个对象创建出来的。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">};</span>
+</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">s</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与下面代码应该相等：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">}</span>
+</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">s</span>
+</span><span class='line'> <span class="mi">0</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">prototype</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;asd&#39;</span> <span class="p">};</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">qq</span><span class="p">;</span>     <span class="c1">// &#39;asd&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><strong>proto</strong></h3>
+
+<p>object都有<strong>proto</strong>属性，其中保存着constructor的prototype</p>
+
+<h3>prototype</h3>
+
+<p>function对象的属性存放处</p>
+
+<h3>function, object</h3>
+
+<p>object拥有constructor，<strong>proto</strong>属性
+function除了拥有上述属性，还拥有prototype属性,还拥有call，apply方法</p>
+
+<h3>后记</h3>
+
+<p>写的还真烂······</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -674,6 +804,10 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/03/22/js_function/">new-post</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/20/spork-reload-model/">spork reload model</a>
       </li>
     
@@ -687,10 +821,6 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
     
       <li class="post">
         <a href="/blog/2012/03/11/js-observer/">js与observer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/11/sui-bi/">myql自定义配置</a>
       </li>
     
   </ul>

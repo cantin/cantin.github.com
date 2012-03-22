@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-03-20T22:42:46+08:00</updated>
+  <updated>2012-03-22T23:30:44+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -12,6 +12,107 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[new-post]]></title>
+    <link href="http://cantin.github.com/blog/2012/03/22/js_function/"/>
+    <updated>2012-03-22T22:49:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/03/22/js_function</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
+顺带一提，这本书真的相当不错。</p>
+
+<h3>object</h3>
+
+<p>js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
+类型。其中基本类型是以栈存放，而object是以堆存放。</p>
+
+<p>在js中object就是key: value的集合。</p>
+
+<p>function对象也是object对象，但是他们都是以function关键字定义滴。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nb">Object</span> <span class="c1">//function Object() {};</span>
+</span><span class='line'>  <span class="nb">Function</span> <span class="c1">//function Function() {};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每一个object里面都会有个constructor的key，value一般就是object的function引用。
+例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obkect</span><span class="p">();</span>
+</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Object() {}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>function, new 与Object, Function</h3>
+
+<p> function与Function是不同的，function是关键字，而Function是对象。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ss&#39;</span> <span class="p">}</span>
+</span><span class='line'><span class="nx">s</span>  <span class="c1">//function s() { this.qq = &#39;ss&#39; }</span>
+</span><span class='line'><span class="nx">s</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Function() {}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所有的function对象都是由Function这个对象创建出来的。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">};</span>
+</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">s</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与下面代码应该相等：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">}</span>
+</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">s</span>
+</span><span class='line'> <span class="mi">0</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">prototype</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;asd&#39;</span> <span class="p">};</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">qq</span><span class="p">;</span>     <span class="c1">// &#39;asd&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><strong>proto</strong></h3>
+
+<p>object都有<strong>proto</strong>属性，其中保存着constructor的prototype</p>
+
+<h3>prototype</h3>
+
+<p>function对象的属性存放处</p>
+
+<h3>function, object</h3>
+
+<p>object拥有constructor，<strong>proto</strong>属性
+function除了拥有上述属性，还拥有prototype属性,还拥有call，apply方法</p>
+
+<h3>后记</h3>
+
+<p>写的还真烂······</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[spork reload model]]></title>

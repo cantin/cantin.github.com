@@ -1,0 +1,342 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>new-post - cantin's blog</title>
+  <meta name="author" content="cantin">
+
+  
+  <meta name="description" content="前言 最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
+顺带一提，这本书真的相当不错。 object js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
+类型。其中基本类型是以栈存放， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cantin.github.com/blog/2012/03/22/js_function">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">cantin's blog</a></h1>
+  
+    <h2>coder for live</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cantin.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">New-post</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T22:49:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>前言</h3>
+
+<p>最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
+顺带一提，这本书真的相当不错。</p>
+
+<h3>object</h3>
+
+<p>js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
+类型。其中基本类型是以栈存放，而object是以堆存放。</p>
+
+<p>在js中object就是key: value的集合。</p>
+
+<p>function对象也是object对象，但是他们都是以function关键字定义滴。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nb">Object</span> <span class="c1">//function Object() {};</span>
+</span><span class='line'>  <span class="nb">Function</span> <span class="c1">//function Function() {};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>每一个object里面都会有个constructor的key，value一般就是object的function引用。
+例如：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obkect</span><span class="p">();</span>
+</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Object() {}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>function, new 与Object, Function</h3>
+
+<p> function与Function是不同的，function是关键字，而Function是对象。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ss&#39;</span> <span class="p">}</span>
+</span><span class='line'><span class="nx">s</span>  <span class="c1">//function s() { this.qq = &#39;ss&#39; }</span>
+</span><span class='line'><span class="nx">s</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Function() {}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所有的function对象都是由Function这个对象创建出来的。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">};</span>
+</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">s</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>与下面代码应该相等：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">}</span>
+</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">s</span>
+</span><span class='line'> <span class="mi">0</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">prototype</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;asd&#39;</span> <span class="p">};</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">qq</span><span class="p">;</span>     <span class="c1">// &#39;asd&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><strong>proto</strong></h3>
+
+<p>object都有<strong>proto</strong>属性，其中保存着constructor的prototype</p>
+
+<h3>prototype</h3>
+
+<p>function对象的属性存放处</p>
+
+<h3>function, object</h3>
+
+<p>object拥有constructor，<strong>proto</strong>属性
+function除了拥有上述属性，还拥有prototype属性,还拥有call，apply方法</p>
+
+<h3>后记</h3>
+
+<p>写的还真烂······</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-22T22:49:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/03/22/js_function/" data-via="" data-counturl="http://cantin.github.com/blog/2012/03/22/js_function/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/20/spork-reload-model/" title="Previous Post: spork reload model">&laquo; spork reload model</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/03/22/js_function/">new-post</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/20/spork-reload-model/">spork reload model</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/18/hash-array-core-ext/">monkeypatch with hash and array</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/15/rails-generator/">generator on rails</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/11/js-observer/">js与observer</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/cantin?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/cantin">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - cantin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cantin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cantin.github.com/blog/2012/03/22/js_function/';
+        var disqus_url = 'http://cantin.github.com/blog/2012/03/22/js_function/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | cantin's blog]]></title>
   <link href="http://cantin.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-03-20T22:42:46+08:00</updated>
+  <updated>2012-03-22T23:30:44+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -12,6 +12,88 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[new-post]]></title>
+    <link href="http://cantin.github.com/blog/2012/03/22/js_function/"/>
+    <updated>2012-03-22T22:49:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/03/22/js_function</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
+顺带一提，这本书真的相当不错。</p>
+
+<h3>object</h3>
+
+<p>js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
+类型。其中基本类型是以栈存放，而object是以堆存放。</p>
+
+<p>在js中object就是key: value的集合。</p>
+
+<p>function对象也是object对象，但是他们都是以function关键字定义滴。</p>
+
+<p><code>js
+  Object //function Object() {};
+  Function //function Function() {};
+</code></p>
+
+<p>每一个object里面都会有个constructor的key，value一般就是object的function引用。
+例如：</p>
+
+<p><code>js
+ var o = new Obkect();
+ o.constructor // function Object() {}
+</code></p>
+
+<h3>function, new 与Object, Function</h3>
+
+<p> function与Function是不同的，function是关键字，而Function是对象。</p>
+
+<p><code>js
+function s() { this.qq = 'ss' }
+s  //function s() { this.qq = 'ss' }
+s.constructor // function Function() {}
+</code>
+所有的function对象都是由Function这个对象创建出来的。</p>
+
+<p><code>js
+ function s() { this.qq = 'ww' };
+ var o = new s();
+</code></p>
+
+<p>与下面代码应该相等：</p>
+
+<p><code>js
+ function s() { this.qq = 'ww' }
+ var o = {};
+ s.call(0)
+ o.constructor = s
+ 0.__proto__ = s.prototype
+</code>
+<code>js
+ function s() { this.qq = 'asd' };
+ s.call(s);
+ s.qq;     // 'asd'
+</code></p>
+
+<h3><strong>proto</strong></h3>
+
+<p>object都有<strong>proto</strong>属性，其中保存着constructor的prototype</p>
+
+<h3>prototype</h3>
+
+<p>function对象的属性存放处</p>
+
+<h3>function, object</h3>
+
+<p>object拥有constructor，<strong>proto</strong>属性
+function除了拥有上述属性，还拥有prototype属性,还拥有call，apply方法</p>
+
+<h3>后记</h3>
+
+<p>写的还真烂······</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[js与observer]]></title>

@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-03-22T23:33:40+08:00</updated>
+  <updated>2012-03-22T23:44:23+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -14,19 +14,11 @@
 
   
   <entry>
-    <title type="html"><![CDATA[new-post]]></title>
+    <title type="html"><![CDATA[function js]]></title>
     <link href="http://cantin.github.com/blog/2012/03/22/js_function/"/>
     <updated>2012-03-22T22:49:00+08:00</updated>
     <id>http://cantin.github.com/blog/2012/03/22/js_function</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
-顺带一提，这本书真的相当不错。</p>
-
-<h3>object</h3>
-
-<p>js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
-类型。其中基本类型是以栈存放，而object是以堆存放。</p>
+    <content type="html"><![CDATA[<h3>object</h3>
 
 <p>在js中object就是key: value的集合。</p>
 

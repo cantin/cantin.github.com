@@ -1,20 +1,12 @@
 ---
 layout: post
-title: "new-post"
+title: "function js"
 date: 2012-03-22 22:49
 comments: true
 categories: javascript
 ---
 
-###前言
-
-最近在重新读“javascript高级程序设计”，又有一些体会，故而写下来。
-顺带一提，这本书真的相当不错。
-
 ###object
-
-js中有undefined，null，boolean，number，string五种基本类型，再加上object这个最根本的复杂（引用）
-类型。其中基本类型是以栈存放，而object是以堆存放。
 
 在js中object就是key: value的集合。
 

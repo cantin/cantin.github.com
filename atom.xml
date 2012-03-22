@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-03-22T23:30:44+08:00</updated>
+  <updated>2012-03-22T23:33:40+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -98,6 +98,19 @@
 <h3><strong>proto</strong></h3>
 
 <p>object都有<strong>proto</strong>属性，其中保存着constructor的prototype</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="c1">//在chrome下</span>
+</span><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{}</span>
+</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">__proto__</span>  <span class="c1">// function Empty() {}</span>
+</span><span class='line'> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// function Empty() {}</span>
+</span><span class='line'> <span class="nb">Function</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">// function Empty() {}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h3>prototype</h3>
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: bundler | cantin's blog]]></title>
+  <link href="http://cantin.github.com/blog/categories/bundler/atom.xml" rel="self"/>
+  <link href="http://cantin.github.com/"/>
+  <updated>2012-05-16T22:45:17+08:00</updated>
+  <id>http://cantin.github.com/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[bundler open]]></title>
+    <link href="http://cantin.github.com/blog/2012/05/16/bundler-open/"/>
+    <updated>2012-05-16T22:37:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/05/16/bundler-open</id>
+    <content type="html"><![CDATA[<h4>bundler</h4>
+
+<p>bundler open 选项可以打开选定的local gem，
+但是在使用的时候需要先指定$EDITOR或者$BUNDLER_EDITOR。</p>
+
+<p>这时候可以先执行
+<code>
+export EDITOR=vim
+</code>
+然后执行</p>
+
+<p><code>
+bundle open gem_name
+</code></p>
+
+<p>这样就可以在vim中打开gem_name所在的目录了</p>
+]]></content>
+  </entry>
+  
+</feed>

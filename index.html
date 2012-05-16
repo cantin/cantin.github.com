@@ -9,8 +9,10 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="object 在js中object就是key: value的集合。 function对象也是object对象，但是他们都是以function关键字定义滴。 1
-2 Object //function Object() {}; Function //function Function() {}; &hellip;">
+  <meta name="description" content="bundler bundler open 选项可以打开选定的local gem，
+但是在使用的时候需要先指定$EDITOR或者$BUNDLER_EDITOR。 这时候可以先执行 1
+export EDITOR=vim 然后执行 1
+bundle open gem_name &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +67,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/05/16/bundler-open/">Bundler Open</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-16T22:37:00+08:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/05/16/bundler-open/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h4>bundler</h4>
+
+<p>bundler open 选项可以打开选定的local gem，
+但是在使用的时候需要先指定$EDITOR或者$BUNDLER_EDITOR。</p>
+
+<p>这时候可以先执行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>export EDITOR=vim</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后执行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>bundle open gem_name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样就可以在vim中打开gem_name所在的目录了</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -808,6 +865,10 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/05/16/bundler-open/">bundler open</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/03/22/js_function/">function js</a>
       </li>
     
@@ -821,10 +882,6 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
     
       <li class="post">
         <a href="/blog/2012/03/15/rails-generator/">generator on rails</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/11/js-observer/">js与observer</a>
       </li>
     
   </ul>

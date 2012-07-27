@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-07-27T21:47:55+08:00</updated>
+  <updated>2012-07-27T21:51:09+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -14,11 +14,95 @@
 
   
   <entry>
-    <title type="html"><![CDATA[new-post]]></title>
+    <title type="html"><![CDATA[proc block]]></title>
     <link href="http://cantin.github.com/blog/2012/07/27/proc-block/"/>
     <updated>2012-07-27T21:23:00+08:00</updated>
     <id>http://cantin.github.com/blog/2012/07/27/proc-block</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<h3>Proc</h3>
+
+<p>在ruby中，block是一种隐形的方法参数, 而不是对象，在方法中直接调用不到，
+，但是在方法中可以将其转化为proc对象，从而可以使用proc的方法。</p>
+
+<h3>&amp;操作符</h3>
+
+<p>block转化为proc的方法是&amp;操作符</p>
+
+<h4>block转化proc</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">block</span><span class="o">.</span><span class="n">class</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">method</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">=&gt;</span> <span class="no">Proc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此时的{} 是隐形的参数，method的表面参数是为0，如果传入的是proc对象，
+proc对象是表面的参数，则会报ArgumentError: wrong number of arguments (1
+for 0)</p>
+
+<h4>proc转化为block</h4>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">method</span>
+</span><span class='line'>  <span class="k">yield</span> <span class="k">if</span> <span class="nb">block_given?</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">p</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s1">&#39;proc&#39;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">method</span> <span class="o">&amp;</span><span class="nb">p</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">=&gt;</span> <span class="nb">proc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>此时的proc经过&amp;转换，在method中变为block隐形的参数。
+另：&amp;p不可以单独使用, 不可在表达式中使用，如</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="nb">p</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="n">syntax</span> <span class="n">error</span><span class="p">,</span> <span class="n">unexpected</span> <span class="n">tAMPER</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="o">&amp;</span><span class="nb">p</span> <span class="p">:</span> <span class="mi">1</span>
+</span><span class='line'><span class="o">=&gt;</span> <span class="n">syntax</span> <span class="n">error</span><span class="p">,</span> <span class="n">unexpected</span> <span class="n">tAMPER</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是可以</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:method</span><span class="p">,</span> <span class="o">&amp;</span><span class="nb">p</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">=&gt;</span> <span class="nb">proc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>结语</h3>
+
+<p>proc，lamdba，block还是很多不得不说的事&#8230;.</p>
 ]]></content>
   </entry>
   

@@ -2,38 +2,42 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://cantin.github.com/blog/2012/03/11/sui-bi/</loc>
-        <lastmod>2012-03-15T22:28:52+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/2012/03/11/js-observer/</loc>
-        <lastmod>2012-03-11T21:54:38+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/2012/03/15/rails-generator/</loc>
-        <lastmod>2012-03-15T22:59:35+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/2012/03/18/hash-array-core-ext/</loc>
-        <lastmod>2012-03-18T22:16:22+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/2012/03/20/spork-reload-model/</loc>
-        <lastmod>2012-03-20T22:42:22+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/2012/03/22/js_function/</loc>
-        <lastmod>2012-03-22T23:43:57+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/2012/05/16/bundler-open/</loc>
-        <lastmod>2012-05-16T22:44:45+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
+    </url>
+    <url>
+        <loc>http://cantin.github.com/blog/2012/07/27/proc-block/</loc>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/blog/archives/</loc>
-        <lastmod>2012-05-16T22:44:45+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
     <url>
         <loc>http://cantin.github.com/</loc>
-        <lastmod>2012-05-16T22:44:45+08:00</lastmod>
+        <lastmod>2012-07-27T21:44:17+08:00</lastmod>
     </url>
 </urlset>

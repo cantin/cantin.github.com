@@ -39,7 +39,7 @@ time = '2012-08-08 21:00:00'
 时间就多了一个小时，这是因为time中的'+0700'
 
 当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
-[https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59](link)
+[link](https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59)
 
 当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
 它会减去8小时，将time从utc格式转换为+0800时区的格式。

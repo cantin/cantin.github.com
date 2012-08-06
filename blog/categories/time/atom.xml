@@ -4,7 +4,7 @@
   <title><![CDATA[Category: time | cantin's blog]]></title>
   <link href="http://cantin.github.com/blog/categories/time/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-08-06T21:31:38+08:00</updated>
+  <updated>2012-08-06T21:38:05+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -51,7 +51,7 @@ time = '2012-08-08 13:00:00 UTC'</p>
 <p>时间就多了一个小时，这是因为time中的'+0700'</p>
 
 <p>当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
-<a href="link">https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59</a></p>
+<a href="https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59">link</a></p>
 
 <p>当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
 它会减去8小时，将time从utc格式转换为+0800时区的格式。</p>

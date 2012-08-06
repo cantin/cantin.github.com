@@ -5,13 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>myql自定义配置 - cantin's blog</title>
+  <title>time_with_zone - cantin's blog</title>
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="mysql配置 在mac下默认是没有my.conf的，如果需要定制的话，可以
-到/usr/local/Cellar/mysql/5.XX/support-file/目录下
-拷贝一份适合的.conf文件到/etc/my.conf mysql默认编码 mysql在mac下的默认编码是utf-8（ &hellip;">
+  <meta name="description" content="time_with_zone 在rails中，server time跟传入的time参数在转化有时候会造成一些问题。 time rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间 比如: utc为：&#8217;2012-08-08 12:00:00&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -20,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://cantin.github.com/blog/2012/03/11/sui-bi">
+  <link rel="canonical" href="http://cantin.github.com/blog/2012/08/06/time_with_zone">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -69,7 +67,7 @@
   
   <header>
     
-      <h1 class="entry-title">Myql自定义配置</h1>
+      <h1 class="entry-title">Time_with_zone</h1>
     
     
       <p class="meta">
@@ -85,7 +83,7 @@
   
 
 
-<time datetime="2012-03-11T10:46:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+<time datetime="2012-08-06T21:04:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -94,16 +92,65 @@
   </header>
 
 
-<div class="entry-content"><h3>mysql配置</h3>
+<div class="entry-content"><h3>time_with_zone</h3>
 
-<p>在mac下默认是没有my.conf的，如果需要定制的话，可以
-到/usr/local/Cellar/mysql/5.XX/support-file/目录下
-拷贝一份适合的.conf文件到/etc/my.conf</p>
+<p>在rails中，server time跟传入的time参数在转化有时候会造成一些问题。</p>
 
-<h3>mysql默认编码</h3>
+<h3>time</h3>
 
-<p>mysql在mac下的默认编码是utf-8（在我机子上是），
-可以使用show varibles like &#8216;character_set%&#8217;;来查询</p>
+<p>rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间</p>
+
+<p>比如: utc为：&#8217;2012-08-08 12:00:00&#8217;,
+而时区设置是：config.time_zone = &#8216;Beijing&#8217;, 即&#8217;+0800&#8217;
+那么当我们在console取出来事：&#8217;2012-08-08 20:00:00 +0800&#8217;</p>
+
+<p>但是，有时候也会出现不一致的情况</p>
+
+<h3>time params with zone</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">params</span><span class="o">[</span><span class="ss">:time</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 12:00:00 +0700&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当上述params传入并save时，在console中取到的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 13:00:00 UTC&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#changed to local_time</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 21:00:00&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>时间就多了一个小时，这是因为time中的&#8217;+0700&#8217;</p>
+
+<p>当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
+<a href="link">https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59</a></p>
+
+<p>当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
+它会减去8小时，将time从utc格式转换为+0800时区的格式。</p>
+
+<p>而当有参数时(如+0700)，time就是+0700时区的，会从+0700转换成+0800, 然后rails取出数据的话
+默认是使用utc取出的，即会加上8小时,所以time就出现了错误。</p>
+
+<p>如果要加上+0700的话，应该在application.rb中添加:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">default_timezone</span> <span class="o">=</span> <span class="s1">&#39;#something respond to +0700&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后存入跟取出的time就会一致了</p>
+
+<h3>后记</h3>
+
+<p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
 </div>
 
 
@@ -126,12 +173,12 @@
   
 
 
-<time datetime="2012-03-11T10:46:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+<time datetime="2012-08-06T21:04:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/mysql/'>mysql</a>
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/time/'>time</a>
   
 </span>
 
@@ -140,7 +187,7 @@
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/03/11/sui-bi/" data-via="" data-counturl="http://cantin.github.com/blog/2012/03/11/sui-bi/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/08/06/time_with_zone/" data-via="" data-counturl="http://cantin.github.com/blog/2012/08/06/time_with_zone/" >Tweet</a>
   
   
   
@@ -149,8 +196,8 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2012/07/27/proc-block/" title="Previous Post: proc block">&laquo; proc block</a>
       
-        <a class="basic-alignment right" href="/blog/2012/03/11/js-observer/" title="Next Post: js与observer">js与observer &raquo;</a>
       
     </p>
   </footer>
@@ -224,8 +271,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://cantin.github.com/blog/2012/03/11/sui-bi/';
-        var disqus_url = 'http://cantin.github.com/blog/2012/03/11/sui-bi/';
+        var disqus_identifier = 'http://cantin.github.com/blog/2012/08/06/time_with_zone/';
+        var disqus_url = 'http://cantin.github.com/blog/2012/08/06/time_with_zone/';
         var disqus_script = 'embed.js';
       
     (function () {

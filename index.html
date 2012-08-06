@@ -9,15 +9,7 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="Proc 在ruby中，block是一种隐形的方法参数, 而不是对象，在方法中直接调用不到，
-，但是在方法中可以将其转化为proc对象，从而可以使用proc的方法。 &amp;操作符 block转化为proc的方法是&amp;操作符 block转化proc 1
-2
-3
-4
-5
-6
-7
-def &hellip;">
+  <meta name="description" content="time_with_zone 在rails中，server time跟传入的time参数在转化有时候会造成一些问题。 time rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间 比如: utc为：&#8217;2012-08-08 12:00:00&# &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -72,6 +64,102 @@ def &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/06/time_with_zone/">Time_with_zone</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T21:04:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/08/06/time_with_zone/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>time_with_zone</h3>
+
+<p>在rails中，server time跟传入的time参数在转化有时候会造成一些问题。</p>
+
+<h3>time</h3>
+
+<p>rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间</p>
+
+<p>比如: utc为：&#8217;2012-08-08 12:00:00&#8217;,
+而时区设置是：config.time_zone = &#8216;Beijing&#8217;, 即&#8217;+0800&#8217;
+那么当我们在console取出来事：&#8217;2012-08-08 20:00:00 +0800&#8217;</p>
+
+<p>但是，有时候也会出现不一致的情况</p>
+
+<h3>time params with zone</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">params</span><span class="o">[</span><span class="ss">:time</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 12:00:00 +0700&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当上述params传入并save时，在console中取到的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 13:00:00 UTC&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#changed to local_time</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 21:00:00&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>时间就多了一个小时，这是因为time中的&#8217;+0700&#8217;</p>
+
+<p>当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
+<a href="link">https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59</a></p>
+
+<p>当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
+它会减去8小时，将time从utc格式转换为+0800时区的格式。</p>
+
+<p>而当有参数时(如+0700)，time就是+0700时区的，会从+0700转换成+0800, 然后rails取出数据的话
+默认是使用utc取出的，即会加上8小时,所以time就出现了错误。</p>
+
+<p>如果要加上+0700的话，应该在application.rb中添加:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">default_timezone</span> <span class="o">=</span> <span class="s1">&#39;#something respond to +0700&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后存入跟取出的time就会一致了</p>
+
+<h3>后记</h3>
+
+<p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -992,6 +1080,10 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/08/06/time_with_zone/">time_with_zone</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/07/27/proc-block/">proc block</a>
       </li>
     
@@ -1005,10 +1097,6 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
     
       <li class="post">
         <a href="/blog/2012/03/20/spork-reload-model/">spork reload model</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/18/hash-array-core-ext/">monkeypatch with hash and array</a>
       </li>
     
   </ul>

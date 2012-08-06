@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: rails | cantin's blog]]></title>
-  <link href="http://cantin.github.com/blog/categories/rails/atom.xml" rel="self"/>
+  <title><![CDATA[Category: time | cantin's blog]]></title>
+  <link href="http://cantin.github.com/blog/categories/time/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
   <updated>2012-08-06T21:31:38+08:00</updated>
   <id>http://cantin.github.com/</id>
@@ -70,63 +70,6 @@ config.active_record.default_timezone = '#something respond to +0700'
 <h3>后记</h3>
 
 <p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[generator on rails]]></title>
-    <link href="http://cantin.github.com/blog/2012/03/15/rails-generator/"/>
-    <updated>2012-03-15T22:27:00+08:00</updated>
-    <id>http://cantin.github.com/blog/2012/03/15/rails-generator</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>generator在rails开发中是十分好用的工具,
-今晚看了一下rails的generator，闲来无事便将基本的记下来。</p>
-
-<p>guides的链接为<a href="http://guides.rubyonrails.org/generators.html">http://guides.rubyonrails.org/generators.html</a></p>
-
-<p>rails3.0以后的generator是建立在Thor这个gem上的，github的链接为<a href="https://github.com/wycats/thor">https://github.com/wycats/thor</a></p>
-
-<h3>生成generator</h3>
-
-<p>进入rails项目，在终端下输入下列命令:</p>
-
-<p><code>ruby
-rails generate generator generator_name
-</code></p>
-
-<p>生成文件如下:</p>
-
-<p><code>sh
-/lib/generator/generator_name/USAGE
-/lib/generator/generator_name/generator_name.rb
-/lib/generator/generator_name/templates/
-</code></p>
-
-<p>其中generator_name.rb中是执行generate命令时运行的文件，
-USAGE是这个generator的说明，
-templates目录下是执行这个generator是需要用到的文件,可在generator_name.rb中改变</p>
-
-<p>若generator_name.rb中有copy_file这个方法
-当执行generator命令时，此方法会找到templates下的相应文件copy到rails项目中</p>
-
-<p>具体可以参考guides</p>
-
-<h3>配置generator</h3>
-
-<p>在rails中可以在config/applications.rb配置generator，如下：</p>
-
-<p><code>ruby
-config.generators do |g|
-  g.orm             :active_record
-  g.template_engine :erb
-  g.test_framework  :test_unit, :fixture =&gt; true
-end
-</code></p>
-
-<h3>后记</h3>
-
-<p>目前还未有用到generator的机会，所以写的实在不是很详细，等以后再来完善吧。</p>
 ]]></content>
   </entry>
   

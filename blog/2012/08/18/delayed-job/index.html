@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>delayed-job - cantin's blog</title>
+  <meta name="author" content="cantin">
+
+  
+  <meta name="description" content="delayed-job delayed-job是一个开源的延时执行任务的后台程序，在web应用上主要可以用来
+异步发送邮件，异步更新数据等等 requirement delayed_job是用数据库来记录所要执行的异步任务的，所以他需要配合sql_db与onsql_db一起使用。 work &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cantin.github.com/blog/2012/08/18/delayed-job">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">cantin's blog</a></h1>
+  
+    <h2>coder for live</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cantin.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Delayed-job</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-18T11:49:00+08:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>delayed-job</h2>
+
+<p>delayed-job是一个开源的延时执行任务的后台程序，在web应用上主要可以用来
+异步发送邮件，异步更新数据等等</p>
+
+<h2>requirement</h2>
+
+<p>delayed_job是用数据库来记录所要执行的异步任务的，所以他需要配合sql_db与onsql_db一起使用。</p>
+
+<h3>work with activerecord</h3>
+
+<p>delayed_job默认是与activerecord在一起使用的</p>
+
+<p>安装：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;delayed_job&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>generate：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rails generate delayed_job:active_record
+</span><span class='line'>rake db:migrate
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>work with mongoid</h3>
+
+<p>如果要跟mongoid配合使用的话，可以安装以下这个</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'> <span class="n">gem</span> <span class="s1">&#39;delayed_job_mongoid&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>create_index:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>script/rails runner <span class="s1">&#39;Delayed::Backend::Mongoid::Job.create_indexes&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>usage</h2>
+
+<h3>invoke</h3>
+
+<p>普通调用delayed_job的方法是在调用对象的delay方法</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@user</span><span class="o">.</span><span class="n">dealy</span><span class="o">.</span><span class="n">send_email</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样子delayed_job就会在后台异步处理send_email这个动作了</p>
+
+<p>另外，也可以在class中定义handle_asynchronously来标明方法是否异步</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">show</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="n">handle_asynchronously</span> <span class="ss">:show</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样调用show的时候就会进入后台处理。
+另外handle_asynchronously还有几个参数，如:priority，:run_at
+:priority指明了这个任务的优先级别
+:run_at指明了这个任务在什么时候执行</p>
+
+<h3>queues</h3>
+
+<p>delayed_job还可以指明这个任务是在那个queue里面执行，后面将介绍可以启动多个jobs来执行不同的queues</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">object</span><span class="o">.</span><span class="n">delay</span><span class="p">(</span><span class="ss">:queue</span> <span class="o">=&gt;</span> <span class="s1">&#39;tracking&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">method</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Job</span><span class="o">.</span><span class="n">enqueue</span> <span class="n">job</span><span class="p">,</span> <span class="ss">:queue</span> <span class="o">=&gt;</span> <span class="s1">&#39;tracking&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">handle_asynchronously</span> <span class="ss">:tweet_later</span><span class="p">,</span> <span class="ss">:queue</span> <span class="o">=&gt;</span> <span class="s1">&#39;tweets&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样可以指明这个任务是在那个queue里面</p>
+
+<h3>running jobs</h3>
+
+<p>我们需要启动jobs才可以执行后台任务</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rake <span class="nb">jobs</span>:work
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">QUEUE</span><span class="o">=</span>tracking rake <span class="nb">jobs</span>:work
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>另外，如果想以daemons的形式启动job</p>
+
+<p>可以加上daemons这个gem</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;daemons&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>generate：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rails generate delayed_job
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后执行</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">RAILS_ENV</span><span class="o">=</span>production script/delayed_job start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样就在production环境下启动job了</p>
+
+<p>另外还有其他选项如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">RAILS_ENV</span><span class="o">=</span>production script/delayed_job stop
+</span><span class='line'>
+</span><span class='line'><span class="nv">RAILS_ENV</span><span class="o">=</span>production script/delayed_job -n 2 start
+</span><span class='line'>//启动两个job
+</span><span class='line'>
+</span><span class='line'>//启动queues
+</span><span class='line'><span class="nv">RAILS_ENV</span><span class="o">=</span>production script/delayed_job --queue<span class="o">=</span>tracking start
+</span><span class='line'><span class="nv">RAILS_ENV</span><span class="o">=</span>production script/delayed_job --queues<span class="o">=</span>mailers,tasks start
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>callback</h3>
+
+<p>  delayed_job还有call_back可以在任务调用过程中对其进行操控</p>
+
+<h3>config</h3>
+
+<p>我们可以在config/initializers/delayed_job_config.rb中配置如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Worker</span><span class="o">.</span><span class="n">destroy_failed_jobs</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Worker</span><span class="o">.</span><span class="n">sleep_delay</span> <span class="o">=</span> <span class="mi">60</span>
+</span><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Worker</span><span class="o">.</span><span class="n">max_attempts</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Worker</span><span class="o">.</span><span class="n">max_run_time</span> <span class="o">=</span> <span class="mi">5</span><span class="o">.</span><span class="n">minutes</span>
+</span><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Worker</span><span class="o">.</span><span class="n">read_ahead</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Worker</span><span class="o">.</span><span class="n">delay_jobs</span> <span class="o">=</span> <span class="o">!</span><span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>work with devise</h2>
+
+<p>  delayed_job一般跟devise配合是用来异步发送邮件，这里可以使用一个gem
+叫&#8217;devise-async&#8217;, 可以跟不同的background program一起运作</p>
+
+<p>  但是这里要介绍一种hack的方法，就是使用handle_asynchronously
+在config/initializers/delayed_job_config.rb中加入</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Devise</span>
+</span><span class='line'>  <span class="k">module</span> <span class="nn">Models</span>
+</span><span class='line'>    <span class="k">module</span> <span class="nn">Confirmable</span>
+</span><span class='line'>      <span class="n">handle_asynchronously</span> <span class="ss">:send_confirmation_instructions</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">module</span> <span class="nn">Recoverable</span>
+</span><span class='line'>      <span class="n">handle_asynchronously</span> <span class="ss">:send_reset_password_instructions</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">module</span> <span class="nn">Lockable</span>
+</span><span class='line'>      <span class="n">handle_asynchronously</span> <span class="ss">:send_unlock_instructions</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样子更改了devise发送邮件的处理方式，从而使邮件异步发送。</p>
+
+<h2>work with exception_notification</h2>
+
+<p>当delayed_job处理任务失败，我们想让他发送一封邮件提醒我们出错了，这时候就可以使用
+exception_notification</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># In config/environments/production.rb or config/initializers/delayed_job.rb</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Optional but recommended for less future surprises.</span>
+</span><span class='line'><span class="c1"># Fail at startup if method does not exist instead of later in a background job.</span>
+</span><span class='line'><span class="o">[[</span><span class="no">ExceptionNotifier</span><span class="o">::</span><span class="no">Notifier</span><span class="p">,</span> <span class="ss">:background_exception_notification</span><span class="o">]].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">object</span><span class="p">,</span> <span class="n">method_name</span><span class="o">|</span>
+</span><span class='line'>  <span class="k">raise</span> <span class="no">NoMethodError</span><span class="p">,</span> <span class="s2">&quot;undefined method `</span><span class="si">#{</span><span class="n">method_name</span><span class="si">}</span><span class="s2">&#39; for </span><span class="si">#{</span><span class="n">object</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">unless</span> <span class="n">object</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="n">method_name</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Chain delayed job&#39;s handle_failed_job method to do exception notification</span>
+</span><span class='line'><span class="no">Delayed</span><span class="o">::</span><span class="no">Worker</span><span class="o">.</span><span class="n">class_eval</span> <span class="k">do</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">handle_failed_job_with_notification</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">handle_failed_job_without_notification</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1"># only actually send mail in production</span>
+</span><span class='line'>    <span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">production?</span>
+</span><span class='line'>      <span class="c1"># rescue if ExceptionNotifier fails for some reason</span>
+</span><span class='line'>      <span class="k">begin</span>
+</span><span class='line'>        <span class="no">ExceptionNotifier</span><span class="o">::</span><span class="no">Notifier</span><span class="o">.</span><span class="n">background_exception_notification</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">rescue</span> <span class="no">Exception</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</span><span class='line'>        <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span> <span class="s2">&quot;ExceptionNotifier failed: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">class</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">#{</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="n">backtrace</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>          <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span> <span class="s2">&quot;  </span><span class="si">#{</span><span class="n">f</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>        <span class="no">Rails</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">flush</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span><span class="o">.</span>
+</span><span class='line'>  <span class="n">alias_method_chain</span> <span class="ss">:handle_failed_job</span><span class="p">,</span> <span class="ss">:notification</span><span class="o">.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样就可以出错时发送邮件提醒，另外也可以使用delayed_job自带的了handle_failed_exception方法</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-18T11:49:00+08:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gem/'>gem</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/08/18/delayed-job/" data-via="" data-counturl="http://cantin.github.com/blog/2012/08/18/delayed-job/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/06/time_with_zone/" title="Previous Post: time_with_zone">&laquo; time_with_zone</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/08/18/delayed-job/">delayed-job</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/06/time_with_zone/">time_with_zone</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/27/proc-block/">proc block</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/16/bundler-open/">bundler open</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/03/22/js_function/">function js</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/cantin?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/cantin">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - cantin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cantin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cantin.github.com/blog/2012/08/18/delayed-job/';
+        var disqus_url = 'http://cantin.github.com/blog/2012/08/18/delayed-job/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

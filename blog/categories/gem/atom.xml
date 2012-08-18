@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: rails | cantin's blog]]></title>
-  <link href="http://cantin.github.com/blog/categories/rails/atom.xml" rel="self"/>
+  <title><![CDATA[Category: gem | cantin's blog]]></title>
+  <link href="http://cantin.github.com/blog/categories/gem/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
   <updated>2012-08-18T12:26:59+08:00</updated>
   <id>http://cantin.github.com/</id>
@@ -235,123 +235,6 @@ end
 end
 ```
 这样就可以出错时发送邮件提醒，另外也可以使用delayed_job自带的了handle_failed_exception方法</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[time_with_zone]]></title>
-    <link href="http://cantin.github.com/blog/2012/08/06/time_with_zone/"/>
-    <updated>2012-08-06T21:04:00+08:00</updated>
-    <id>http://cantin.github.com/blog/2012/08/06/time_with_zone</id>
-    <content type="html"><![CDATA[<h3>time_with_zone</h3>
-
-<p>在rails中，server time跟传入的time参数在转化有时候会造成一些问题。</p>
-
-<h3>time</h3>
-
-<p>rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间</p>
-
-<p>比如: utc为：'2012-08-08 12:00:00',
-而时区设置是：config.time_zone = 'Beijing', 即'+0800'
-那么当我们在console取出来事：'2012-08-08 20:00:00 +0800'</p>
-
-<p>但是，有时候也会出现不一致的情况</p>
-
-<h3>time params with zone</h3>
-
-<p><code>ruby
-params[:time] = '2012-08-08 12:00:00 +0700'
-</code></p>
-
-<p>当上述params传入并save时，在console中取到的：</p>
-
-<p>```ruby
-time = '2012-08-08 13:00:00 UTC'</p>
-
-<h1>changed to local_time</h1>
-
-<p>time = '2012-08-08 21:00:00'
-```</p>
-
-<p>时间就多了一个小时，这是因为time中的'+0700'</p>
-
-<p>当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
-<a href="https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59">link</a></p>
-
-<p>当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
-它会减去8小时，将time从utc格式转换为+0800时区的格式。</p>
-
-<p>而当有参数时(如+0700)，time就是+0700时区的，会从+0700转换成+0800, 然后rails取出数据的话
-默认是使用utc取出的，即会加上8小时,所以time就出现了错误。</p>
-
-<p>如果要加上+0700的话，应该在application.rb中添加:</p>
-
-<p><code>ruby
-config.active_record.default_timezone = '#something respond to +0700'
-</code></p>
-
-<p>然后存入跟取出的time就会一致了</p>
-
-<h3>后记</h3>
-
-<p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[generator on rails]]></title>
-    <link href="http://cantin.github.com/blog/2012/03/15/rails-generator/"/>
-    <updated>2012-03-15T22:27:00+08:00</updated>
-    <id>http://cantin.github.com/blog/2012/03/15/rails-generator</id>
-    <content type="html"><![CDATA[<h3>前言</h3>
-
-<p>generator在rails开发中是十分好用的工具,
-今晚看了一下rails的generator，闲来无事便将基本的记下来。</p>
-
-<p>guides的链接为<a href="http://guides.rubyonrails.org/generators.html">http://guides.rubyonrails.org/generators.html</a></p>
-
-<p>rails3.0以后的generator是建立在Thor这个gem上的，github的链接为<a href="https://github.com/wycats/thor">https://github.com/wycats/thor</a></p>
-
-<h3>生成generator</h3>
-
-<p>进入rails项目，在终端下输入下列命令:</p>
-
-<p><code>ruby
-rails generate generator generator_name
-</code></p>
-
-<p>生成文件如下:</p>
-
-<p><code>sh
-/lib/generator/generator_name/USAGE
-/lib/generator/generator_name/generator_name.rb
-/lib/generator/generator_name/templates/
-</code></p>
-
-<p>其中generator_name.rb中是执行generate命令时运行的文件，
-USAGE是这个generator的说明，
-templates目录下是执行这个generator是需要用到的文件,可在generator_name.rb中改变</p>
-
-<p>若generator_name.rb中有copy_file这个方法
-当执行generator命令时，此方法会找到templates下的相应文件copy到rails项目中</p>
-
-<p>具体可以参考guides</p>
-
-<h3>配置generator</h3>
-
-<p>在rails中可以在config/applications.rb配置generator，如下：</p>
-
-<p><code>ruby
-config.generators do |g|
-  g.orm             :active_record
-  g.template_engine :erb
-  g.test_framework  :test_unit, :fixture =&gt; true
-end
-</code></p>
-
-<h3>后记</h3>
-
-<p>目前还未有用到generator的机会，所以写的实在不是很详细，等以后再来完善吧。</p>
 ]]></content>
   </entry>
   

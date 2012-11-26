@@ -9,8 +9,8 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="delayed-job delayed-job是一个开源的延时执行任务的后台程序，在web应用上主要可以用来
-异步发送邮件，异步更新数据等等 requirement delayed_job是用数据库来记录所要执行的异步任务的，所以他需要配合sql_db与onsql_db一起使用。 work &hellip;">
+  <meta name="description" content="Jquery-rails monkey patch Since Rails 3, unconspicuous javascript(jquery-rails) instead of prototype.js to make
+thing easily. It provide a sample way &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,118 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/26/jquery-rails-monkey-patch/">Jquery-rails-monkey-patch</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T17:57:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/11/26/jquery-rails-monkey-patch/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Jquery-rails monkey patch</h2>
+
+<p>Since Rails 3, unconspicuous javascript(jquery-rails) instead of prototype.js to make
+thing easily. It provide a sample way to handle ajax, confirm, etc&#8230;</p>
+
+<p>Sometimes jquery-rails couldn&#8217;t fit for our situation.For example:</p>
+
+<p>With added &#8220;confirm: &#8216;this is is a confirm&#8217;&#8221;, the button element
+has the confirm function. But We could&#8217;t dynamically set the text whlie
+the confirm appear.</p>
+
+<p>In this case, We can add a monkey patch into jquery-rails to fit for our need.</p>
+
+<p>First of all We look at the source of juqery-rails, figure out what make
+this happened.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">allowAction</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">=</span> <span class="kp">false</span><span class="p">,</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kp">true</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">answer</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">callback</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm:complete&#39;</span><span class="p">,</span> <span class="o">[</span><span class="n">answer</span><span class="o">]</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span> <span class="o">&amp;&amp;</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After that, We overwrite this function in application.js</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$.</span><span class="n">rails</span><span class="o">.</span><span class="n">allowAction</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">rails</span> <span class="o">=</span> <span class="vg">$.</span><span class="n">rails</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">var</span> <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">=</span> <span class="kp">false</span><span class="p">,</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kp">true</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">answer</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">callback</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm:complete&#39;</span><span class="p">,</span> <span class="o">[</span><span class="n">answer</span><span class="o">]</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span> <span class="o">&amp;&amp;</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, We can dynamically set the confirm text.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1348,54 +1460,9 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/11/sui-bi/">Myql自定义配置</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-11T10:46:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/03/11/sui-bi/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>mysql配置</h3>
-
-<p>在mac下默认是没有my.conf的，如果需要定制的话，可以
-到/usr/local/Cellar/mysql/5.XX/support-file/目录下
-拷贝一份适合的.conf文件到/etc/my.conf</p>
-
-<h3>mysql默认编码</h3>
-
-<p>mysql在mac下的默认编码是utf-8（在我机子上是），
-可以使用show varibles like &#8216;character_set%&#8217;;来查询</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1406,6 +1473,10 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">jquery-rails-monkey-patch</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2012/08/18/delayed-job/">delayed-job</a>
@@ -1421,10 +1492,6 @@ model的几个函数交互，而不需要知道其他对象的实现细节,同�
     
       <li class="post">
         <a href="/blog/2012/05/16/bundler-open/">bundler open</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/03/22/js_function/">function js</a>
       </li>
     
   </ul>

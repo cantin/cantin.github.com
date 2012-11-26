@@ -5,14 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>bundler open - cantin's blog</title>
+  <title>cantin's blog</title>
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="bundler bundler open 选项可以打开选定的local gem，
-但是在使用的时候需要先指定$EDITOR或者$BUNDLER_EDITOR。 这时候可以先执行 1
-export EDITOR=vim 然后执行 1
-bundle open gem_name &hellip;">
+  <meta name="description" content="mysql配置 在mac下默认是没有my.conf的，如果需要定制的话，可以
+到/usr/local/Cellar/mysql/5.XX/support-file/目录下
+拷贝一份适合的.conf文件到/etc/my.conf mysql默认编码 mysql在mac下的默认编码是utf-8（ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +20,7 @@ bundle open gem_name &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://cantin.github.com/blog/2012/05/16/bundler-open">
+  <link rel="canonical" href="http://cantin.github.com/blog/page/2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -65,12 +64,15 @@ bundle open gem_name &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Bundler Open</h1>
+      <h1 class="entry-title"><a href="/blog/2012/03/11/sui-bi/">Myql自定义配置</a></h1>
     
     
       <p class="meta">
@@ -86,95 +88,40 @@ bundle open gem_name &hellip;">
   
 
 
-<time datetime="2012-05-16T22:37:00+08:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
+<time datetime="2012-03-11T10:46:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
         
-         | <a href="#disqus_thread">Comments</a>
+         | <a href="/blog/2012/03/11/sui-bi/#disqus_thread">Comments</a>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h4>bundler</h4>
+  <div class="entry-content"><h3>mysql配置</h3>
 
-<p>bundler open 选项可以打开选定的local gem，
-但是在使用的时候需要先指定$EDITOR或者$BUNDLER_EDITOR。</p>
+<p>在mac下默认是没有my.conf的，如果需要定制的话，可以
+到/usr/local/Cellar/mysql/5.XX/support-file/目录下
+拷贝一份适合的.conf文件到/etc/my.conf</p>
 
-<p>这时候可以先执行</p>
+<h3>mysql默认编码</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>export EDITOR=vim</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后执行</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>bundle open gem_name</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这样就可以在vim中打开gem_name所在的目录了</p>
+<p>mysql在mac下的默认编码是utf-8（在我机子上是），
+可以使用show varibles like &#8216;character_set%&#8217;;来查询</p>
 </div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
-
-      
-
-
-
-
-
-
-
-
   
 
 
-<time datetime="2012-05-16T22:37:00+08:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/blog/categories/bundler/'>bundler</a>, <a class='category' href='/blog/categories/tips/'>tips</a>
-  
-</span>
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/05/16/bundler-open/" data-via="" data-counturl="http://cantin.github.com/blog/2012/05/16/bundler-open/" >Tweet</a>
-  
-  
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2012/03/22/js_function/" title="Previous Post: function js">&laquo; function js</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2012/07/27/proc-block/" title="Next Post: proc block">proc block &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -219,7 +166,6 @@ bundle open gem_name &hellip;">
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -234,10 +180,7 @@ bundle open gem_name &hellip;">
       var disqus_shortname = 'cantin';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://cantin.github.com/blog/2012/05/16/bundler-open/';
-        var disqus_url = 'http://cantin.github.com/blog/2012/05/16/bundler-open/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

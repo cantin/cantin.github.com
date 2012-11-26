@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-08-18T12:26:59+08:00</updated>
+  <updated>2012-11-26T18:16:15+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[jquery-rails-monkey-patch]]></title>
+    <link href="http://cantin.github.com/blog/2012/11/26/jquery-rails-monkey-patch/"/>
+    <updated>2012-11-26T17:57:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/11/26/jquery-rails-monkey-patch</id>
+    <content type="html"><![CDATA[<h2>Jquery-rails monkey patch</h2>
+
+<p>Since Rails 3, unconspicuous javascript(jquery-rails) instead of prototype.js to make
+thing easily. It provide a sample way to handle ajax, confirm, etc&#8230;</p>
+
+<p>Sometimes jquery-rails couldn&#8217;t fit for our situation.For example:</p>
+
+<p>With added &#8220;confirm: &#8216;this is is a confirm&#8217;&#8221;, the button element
+has the confirm function. But We could&#8217;t dynamically set the text whlie
+the confirm appear.</p>
+
+<p>In this case, We can add a monkey patch into jquery-rails to fit for our need.</p>
+
+<p>First of all We look at the source of juqery-rails, figure out what make
+this happened.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">allowAction</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">=</span> <span class="kp">false</span><span class="p">,</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kp">true</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">answer</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">callback</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm:complete&#39;</span><span class="p">,</span> <span class="o">[</span><span class="n">answer</span><span class="o">]</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span> <span class="o">&amp;&amp;</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After that, We overwrite this function in application.js</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$.</span><span class="n">rails</span><span class="o">.</span><span class="n">allowAction</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">rails</span> <span class="o">=</span> <span class="vg">$.</span><span class="n">rails</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">var</span> <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">=</span> <span class="kp">false</span><span class="p">,</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kp">true</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">answer</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">callback</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm:complete&#39;</span><span class="p">,</span> <span class="o">[</span><span class="n">answer</span><span class="o">]</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span> <span class="o">&amp;&amp;</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, We can dynamically set the confirm text.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[delayed-job]]></title>

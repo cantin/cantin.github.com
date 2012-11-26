@@ -1,0 +1,323 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>jquery-rails-monkey-patch - cantin's blog</title>
+  <meta name="author" content="cantin">
+
+  
+  <meta name="description" content="Jquery-rails monkey patch Since Rails 3, unconspicuous javascript(jquery-rails) instead of prototype.js to make
+thing easily. It provide a sample way &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://cantin.github.com/blog/2012/11/26/jquery-rails-monkey-patch">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">cantin's blog</a></h1>
+  
+    <h2>coder for live</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:cantin.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Jquery-rails-monkey-patch</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T17:57:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Jquery-rails monkey patch</h2>
+
+<p>Since Rails 3, unconspicuous javascript(jquery-rails) instead of prototype.js to make
+thing easily. It provide a sample way to handle ajax, confirm, etc&#8230;</p>
+
+<p>Sometimes jquery-rails couldn&#8217;t fit for our situation.For example:</p>
+
+<p>With added &#8220;confirm: &#8216;this is is a confirm&#8217;&#8221;, the button element
+has the confirm function. But We could&#8217;t dynamically set the text whlie
+the confirm appear.</p>
+
+<p>In this case, We can add a monkey patch into jquery-rails to fit for our need.</p>
+
+<p>First of all We look at the source of juqery-rails, figure out what make
+this happened.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">allowAction</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">=</span> <span class="kp">false</span><span class="p">,</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kp">true</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">answer</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">callback</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm:complete&#39;</span><span class="p">,</span> <span class="o">[</span><span class="n">answer</span><span class="o">]</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span> <span class="o">&amp;&amp;</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">},</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After that, We overwrite this function in application.js</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="vg">$.</span><span class="n">rails</span><span class="o">.</span><span class="n">allowAction</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">rails</span> <span class="o">=</span> <span class="vg">$.</span><span class="n">rails</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">var</span> <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">=</span> <span class="kp">false</span><span class="p">,</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">message</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="kp">true</span><span class="p">;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">message</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">(</span><span class="s1">&#39;confirm&#39;</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">answer</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">callback</span> <span class="o">=</span> <span class="n">rails</span><span class="o">.</span><span class="n">fire</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="s1">&#39;confirm:complete&#39;</span><span class="p">,</span> <span class="o">[</span><span class="n">answer</span><span class="o">]</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">answer</span> <span class="o">&amp;&amp;</span> <span class="n">callback</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, We can dynamically set the confirm text.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T17:57:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/monkey-patch/'>monkey_patch</a>, <a class='category' href='/blog/categories/rails/'>rails</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/11/26/jquery-rails-monkey-patch/" data-via="" data-counturl="http://cantin.github.com/blog/2012/11/26/jquery-rails-monkey-patch/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/18/delayed-job/" title="Previous Post: delayed-job">&laquo; delayed-job</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">jquery-rails-monkey-patch</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/18/delayed-job/">delayed-job</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/08/06/time_with_zone/">time_with_zone</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/27/proc-block/">proc block</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/05/16/bundler-open/">bundler open</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/cantin?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/cantin">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - cantin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cantin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cantin.github.com/blog/2012/11/26/jquery-rails-monkey-patch/';
+        var disqus_url = 'http://cantin.github.com/blog/2012/11/26/jquery-rails-monkey-patch/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

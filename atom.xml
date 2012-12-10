@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-11-26T18:16:15+08:00</updated>
+  <updated>2012-12-10T14:24:32+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -12,6 +12,63 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[new-post]]></title>
+    <link href="http://cantin.github.com/blog/2012/12/10/new-post/"/>
+    <updated>2012-12-10T14:14:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/12/10/new-post</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[install_apple_gcc42]]></title>
+    <link href="http://cantin.github.com/blog/2012/12/10/install-apple-gcc42/"/>
+    <updated>2012-12-10T14:14:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/12/10/install-apple-gcc42</id>
+    <content type="html"><![CDATA[<h2>#</h2>
+
+<p>Install apple-gcc42 by homebrew,</p>
+
+<h2>#</h2>
+
+<h3>#</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
+</span><span class='line'>brew install apple-gcc42
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>if it is too slow, you can download it manually.</p>
+
+<ol>
+<li>looking for Formula by http://braumeister.org/, or</li>
+</ol>
+
+
+<p>  find the url in &#8216;https://github.com/Homebrew/homebrew-dupes/blob/master/apple-gcc42.rb&#8217;,
+  it is &#8216;http://r.research.att.com/tools/gcc-42-5666.3-darwin11.pkg&#8217;,
+  version is &#8216;4.2.1-5666.3&#8217;, maybe not the lastest as time pass by.</p>
+
+<ol>
+<li>puts this in /usr/local/Library/Caches/, run again.</li>
+</ol>
+
+
+<p>notes:
+if you run &#8216;brew install appe-gcc42&#8217;, it says counldn&#8217;t found any Formula named apple-gcc42</p>
+
+<p>first, try brew tap homebrew/dupes, then run again.</p>
+
+<p>seaond, download the &#8216;https://github.com/Homebrew/homebrew-dupes/blob/master/apple-gcc42.rb&#8217;, put it into
+/usr/local/Library/Formula/, then try again</p>
+
+<h3>#</h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[jquery-rails-monkey-patch]]></title>

@@ -5,11 +5,14 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: core-ext - cantin's blog</title>
+  <title>install_apple_gcc42 - cantin's blog</title>
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="Category: core-ext">
+  <meta name="description" content="# Install apple-gcc42 by homebrew, # # 1
+2
+brew tap homebrew/dupes
+brew install apple-gcc42 if it is too slow, you can download it manually. looking &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://cantin.github.comblog/categories/core-ext">
+  <link rel="canonical" href="http://cantin.github.com/blog/2012/12/10/install-apple-gcc42">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -63,36 +66,134 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Core-ext</h1>
+    
+      <h1 class="entry-title">Install_apple_gcc42</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-10T14:14:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><h2>#</h2>
 
-  
-  <h2>2012</h2>
+<p>Install apple-gcc42 by homebrew,</p>
 
-<article>
-  
-<h1><a href="/blog/2012/03/18/hash-array-core-ext/">monkeypatch with hash and array</a></h1>
-<time datetime="2012-03-18T22:00:00+08:00" pubdate><span class='month'>Mar</span> <span class='day'>18</span> <span class='year'>2012</span></time>
+<h2>#</h2>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/core-ext/'>core-ext</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a></span>
-</footer>
+<h3>#</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>brew tap homebrew/dupes
+</span><span class='line'>brew install apple-gcc42
+</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>if it is too slow, you can download it manually.</p>
 
+<ol>
+<li>looking for Formula by http://braumeister.org/, or</li>
+</ol>
+
+
+<p>  find the url in &#8216;https://github.com/Homebrew/homebrew-dupes/blob/master/apple-gcc42.rb&#8217;,
+  it is &#8216;http://r.research.att.com/tools/gcc-42-5666.3-darwin11.pkg&#8217;,
+  version is &#8216;4.2.1-5666.3&#8217;, maybe not the lastest as time pass by.</p>
+
+<ol>
+<li>puts this in /usr/local/Library/Caches/, run again.</li>
+</ol>
+
+
+<p>notes:
+if you run &#8216;brew install appe-gcc42&#8217;, it says counldn&#8217;t found any Formula named apple-gcc42</p>
+
+<p>first, try brew tap homebrew/dupes, then run again.</p>
+
+<p>seaond, download the &#8216;https://github.com/Homebrew/homebrew-dupes/blob/master/apple-gcc42.rb&#8217;, put it into
+/usr/local/Library/Formula/, then try again</p>
+
+<h3>#</h3>
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-10T14:14:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gcc/'>gcc</a>, <a class='category' href='/blog/categories/homebrew/'>homebrew</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://cantin.github.com/blog/2012/12/10/install-apple-gcc42/" data-via="" data-counturl="http://cantin.github.com/blog/2012/12/10/install-apple-gcc42/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/11/26/jquery-rails-monkey-patch/" title="Previous Post: jquery-rails-monkey-patch">&laquo; jquery-rails-monkey-patch</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/12/10/new-post/" title="Next Post: new-post">new-post &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -155,7 +256,10 @@
       var disqus_shortname = 'cantin';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://cantin.github.com/blog/2012/12/10/install-apple-gcc42/';
+        var disqus_url = 'http://cantin.github.com/blog/2012/12/10/install-apple-gcc42/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

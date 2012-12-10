@@ -9,9 +9,8 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="mysql配置 在mac下默认是没有my.conf的，如果需要定制的话，可以
-到/usr/local/Cellar/mysql/5.XX/support-file/目录下
-拷贝一份适合的.conf文件到/etc/my.conf mysql默认编码 mysql在mac下的默认编码是utf-8（ &hellip;">
+  <meta name="description" content="前言 generator在rails开发中是十分好用的工具,
+今晚看了一下rails的generator，闲来无事便将基本的记下来。 guides的链接为http://guides.rubyonrails.org/generators.html rails3. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,345 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/15/rails-generator/">Generator on Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T22:27:00+08:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/15/rails-generator/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>generator在rails开发中是十分好用的工具,
+今晚看了一下rails的generator，闲来无事便将基本的记下来。</p>
+
+<p>guides的链接为<a href="http://guides.rubyonrails.org/generators.html">http://guides.rubyonrails.org/generators.html</a></p>
+
+<p>rails3.0以后的generator是建立在Thor这个gem上的，github的链接为<a href="https://github.com/wycats/thor">https://github.com/wycats/thor</a></p>
+
+<h3>生成generator</h3>
+
+<p>进入rails项目，在终端下输入下列命令:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rails</span> <span class="n">generate</span> <span class="n">generator</span> <span class="n">generator_name</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成文件如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/lib/generator/generator_name/USAGE
+</span><span class='line'>/lib/generator/generator_name/generator_name.rb
+</span><span class='line'>/lib/generator/generator_name/templates/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中generator_name.rb中是执行generate命令时运行的文件，
+USAGE是这个generator的说明，
+templates目录下是执行这个generator是需要用到的文件,可在generator_name.rb中改变</p>
+
+<p>若generator_name.rb中有copy_file这个方法
+当执行generator命令时，此方法会找到templates下的相应文件copy到rails项目中</p>
+
+<p>具体可以参考guides</p>
+
+<h3>配置generator</h3>
+
+<p>在rails中可以在config/applications.rb配置generator，如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">generators</span> <span class="k">do</span> <span class="o">|</span><span class="n">g</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">orm</span>             <span class="ss">:active_record</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">template_engine</span> <span class="ss">:erb</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">test_framework</span>  <span class="ss">:test_unit</span><span class="p">,</span> <span class="ss">:fixture</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>后记</h3>
+
+<p>目前还未有用到generator的机会，所以写的实在不是很详细，等以后再来完善吧。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/11/js-observer/">Js与observer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-11T20:41:00+08:00" pubdate data-updated="true">Mar 11<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/11/js-observer/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>前言</h2>
+
+<p>放假的晚上，窝在宿舍，懒懒的。无聊之余就想写一下之前学过的
+javascript的observer，免得自己将来真的忘了。</p>
+
+<p>ps：现在真的快忘了。。。。</p>
+
+<h2>javascript与observer</h2>
+
+<h3>为什么需要observer</h3>
+
+<p>在编写js的时候，通常会遇到这样的问题。js中的数据与页面的数据需要保持一致.
+比如说在js中的一个model，当它发生改变时，页面上对应的数据必须发生改变。
+如果不使用observer的话，我们可能需要自己手动的在方法中调用。这样会导致model
+与view的代码紧耦合。一旦需求变动，将很难改动。在这种情况下，我们可以使用observer来
+解决这个问题。通过model的注册事件，一旦发生事件，对应的view的代码便会执行，从而达到
+一致的目的。</p>
+
+<h3>observer的用法</h3>
+
+<h4>Event对象</h4>
+
+<p>首先，我们需要一个Event对象来存放事件触发后执行的handler与它的scope。</p>
+
+<p>event构造如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="kd">function</span> <span class="nx">Event</span><span class="p">(</span><span class="nx">handler</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="nx">handler</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">scope</span> <span class="o">=</span> <span class="nx">scope</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>model的写法</h4>
+
+<p>在model中，需要有属性如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">Model</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">event</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="s2">&quot;remove&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">];</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">listener</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">....</span>
+</span><span class='line'> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中event为数组，存放着当model的事件，当这些事件触发时，会调用listener中对应数组的event对象。
+listener是存放event对象的一个对象（或者近似的认为是hash）。
+在model里还需要有如下方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nx">Model</span><span class="p">.</span><span class="nx">pototype</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">add</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="p">.....</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// at the end</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">on</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">hasEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Event</span><span class="p">(</span><span class="nx">handler</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">]){</span>
+</span><span class='line'>          <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//private</span>
+</span><span class='line'>    <span class="nx">fireEvent</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">hasEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)){</span>
+</span><span class='line'>        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">][</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>          <span class="nx">e</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//private</span>
+</span><span class='line'>    <span class="nx">hasEvent</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">event</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中private表示此方法不对外提供,
+hasEvent是为了判断传入的事件是否是model中注册的事件,
+fireEvent是在model在内部调用，用以调用在view在model注册的handler,
+on是提供对外的接口，用来让view调用，注册view的handler，
+add是model事件函数示例，在让model发生改变的方法中的最下面调用fireEvent，从而达到调用handler的目的。</p>
+
+<p>ps:不负责任的说，Event对象的options参数是我在写这篇文章时候才加进去的，没有经过任何测试，哇哈哈。</p>
+
+<p>ps:再不负责的说，上述方法都是我凭印象写的，正确性应该是可以保证的吧····</p>
+
+<h4>view的写法</h4>
+
+<p>在view中我们需要向model中注册当model发生改变是自动执行的函数，也就是handler.</p>
+
+<p>示例代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="kd">function</span> <span class="nx">View</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Model</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">View</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">view</span><span class="p">.</span><span class="nx">addView</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//something for handle while model fire</span>
+</span><span class='line'>    <span class="p">.....</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">view</span><span class="p">.</span><span class="nx">addHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="nx">addView</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">view</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>view的写法有多种，大意就是调用model的on函数。</p>
+
+<h3>小结</h3>
+
+<p>observer的好处在于，当model（或者是其他对象）变化的时候，它能通知到其他注册在上面的对象也发生变化。
+这样一方面是全部对象更新的很及时，另一方面是解耦了对象，model（被观察对象？）与view（观察对象？）只需要通过
+model的几个函数交互，而不需要知道其他对象的实现细节,同时view可以注册多个handler到model中去，可扩展性比较好。</p>
+
+<p>ps:我还是不知道model与view是谁观察谁·····</p>
+
+<p>ps：文笔感觉还是很不行，见谅见谅。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -129,6 +467,14 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/12/10/new-post/">new-post</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/10/install-apple-gcc42/">install_apple_gcc42</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">jquery-rails-monkey-patch</a>
       </li>
     
@@ -138,14 +484,6 @@
     
       <li class="post">
         <a href="/blog/2012/08/06/time_with_zone/">time_with_zone</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/07/27/proc-block/">proc block</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/05/16/bundler-open/">bundler open</a>
       </li>
     
   </ul>

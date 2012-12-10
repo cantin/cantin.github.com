@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: homebrew | cantin's blog]]></title>
+  <link href="http://cantin.github.com/blog/categories/homebrew/atom.xml" rel="self"/>
+  <link href="http://cantin.github.com/"/>
+  <updated>2012-12-10T14:24:32+08:00</updated>
+  <id>http://cantin.github.com/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[install_apple_gcc42]]></title>
+    <link href="http://cantin.github.com/blog/2012/12/10/install-apple-gcc42/"/>
+    <updated>2012-12-10T14:14:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2012/12/10/install-apple-gcc42</id>
+    <content type="html"><![CDATA[<h2>#</h2>
+
+<p>Install apple-gcc42 by homebrew,</p>
+
+<h2>#</h2>
+
+<h3>#</h3>
+
+<p><code>bash
+brew tap homebrew/dupes
+brew install apple-gcc42
+</code></p>
+
+<p>if it is too slow, you can download it manually.</p>
+
+<ol>
+<li>looking for Formula by http://braumeister.org/, or</li>
+</ol>
+
+
+<p>  find the url in 'https://github.com/Homebrew/homebrew-dupes/blob/master/apple-gcc42.rb',
+  it is 'http://r.research.att.com/tools/gcc-42-5666.3-darwin11.pkg',
+  version is '4.2.1-5666.3', maybe not the lastest as time pass by.</p>
+
+<ol>
+<li>puts this in /usr/local/Library/Caches/, run again.</li>
+</ol>
+
+
+<p>notes:
+if you run 'brew install appe-gcc42', it says counldn't found any Formula named apple-gcc42</p>
+
+<p>first, try brew tap homebrew/dupes, then run again.</p>
+
+<p>seaond, download the 'https://github.com/Homebrew/homebrew-dupes/blob/master/apple-gcc42.rb', put it into
+/usr/local/Library/Formula/, then try again</p>
+
+<h3>#</h3>
+]]></content>
+  </entry>
+  
+</feed>

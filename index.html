@@ -9,8 +9,10 @@
   <meta name="author" content="cantin">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="# Install apple-gcc42 by homebrew, # # 1
+2
+brew tap homebrew/dupes
+brew install apple-gcc42 if it is too slow, you can download it manually. looking &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,44 +67,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/10/new-post/">New-post</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-10T14:14:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/12/10/new-post/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -165,7 +129,16 @@
 </ol>
 
 
-<p>notes:
+<p>ps:
+  Sometimes it will appear errors like: &#8216;make: /usr/bin/gcc-4.2: No such file or directory&#8217;.
+  The resolution is link apple-gcc42 to gcc-4.2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  sudo ln -s /usr/local/bin/gcc-4.2 /usr/bin/gcc-4.2
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>pps:
 if you run &#8216;brew install appe-gcc42&#8217;, it says counldn&#8217;t found any Formula named apple-gcc42</p>
 
 <p>first, try brew tap homebrew/dupes, then run again.</p>
@@ -1236,6 +1209,101 @@ function除了拥有上述属性，还拥有prototype属性,还拥有call，appl
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/15/rails-generator/">Generator on Rails</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-15T22:27:00+08:00" pubdate data-updated="true">Mar 15<span>th</span>, 2012</time>
+        
+         | <a href="/blog/2012/03/15/rails-generator/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>前言</h3>
+
+<p>generator在rails开发中是十分好用的工具,
+今晚看了一下rails的generator，闲来无事便将基本的记下来。</p>
+
+<p>guides的链接为<a href="http://guides.rubyonrails.org/generators.html">http://guides.rubyonrails.org/generators.html</a></p>
+
+<p>rails3.0以后的generator是建立在Thor这个gem上的，github的链接为<a href="https://github.com/wycats/thor">https://github.com/wycats/thor</a></p>
+
+<h3>生成generator</h3>
+
+<p>进入rails项目，在终端下输入下列命令:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rails</span> <span class="n">generate</span> <span class="n">generator</span> <span class="n">generator_name</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成文件如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/lib/generator/generator_name/USAGE
+</span><span class='line'>/lib/generator/generator_name/generator_name.rb
+</span><span class='line'>/lib/generator/generator_name/templates/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中generator_name.rb中是执行generate命令时运行的文件，
+USAGE是这个generator的说明，
+templates目录下是执行这个generator是需要用到的文件,可在generator_name.rb中改变</p>
+
+<p>若generator_name.rb中有copy_file这个方法
+当执行generator命令时，此方法会找到templates下的相应文件copy到rails项目中</p>
+
+<p>具体可以参考guides</p>
+
+<h3>配置generator</h3>
+
+<p>在rails中可以在config/applications.rb配置generator，如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">generators</span> <span class="k">do</span> <span class="o">|</span><span class="n">g</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">orm</span>             <span class="ss">:active_record</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">template_engine</span> <span class="ss">:erb</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">test_framework</span>  <span class="ss">:test_unit</span><span class="p">,</span> <span class="ss">:fixture</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>后记</h3>
+
+<p>目前还未有用到generator的机会，所以写的实在不是很详细，等以后再来完善吧。</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1251,10 +1319,6 @@ function除了拥有上述属性，还拥有prototype属性,还拥有call，appl
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2012/12/10/new-post/">new-post</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2012/12/10/install-apple-gcc42/">install_apple_gcc42</a>
       </li>
     
@@ -1268,6 +1332,10 @@ function除了拥有上述属性，还拥有prototype属性,还拥有call，appl
     
       <li class="post">
         <a href="/blog/2012/08/06/time_with_zone/">time_with_zone</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/07/27/proc-block/">proc block</a>
       </li>
     
   </ul>

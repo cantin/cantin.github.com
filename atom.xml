@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2012-12-10T14:24:32+08:00</updated>
+  <updated>2012-12-10T16:50:11+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -12,15 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[new-post]]></title>
-    <link href="http://cantin.github.com/blog/2012/12/10/new-post/"/>
-    <updated>2012-12-10T14:14:00+08:00</updated>
-    <id>http://cantin.github.com/blog/2012/12/10/new-post</id>
-    <content type="html"><![CDATA[
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[install_apple_gcc42]]></title>
@@ -58,7 +49,16 @@
 </ol>
 
 
-<p>notes:
+<p>ps:
+  Sometimes it will appear errors like: &#8216;make: /usr/bin/gcc-4.2: No such file or directory&#8217;.
+  The resolution is link apple-gcc42 to gcc-4.2</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  sudo ln -s /usr/local/bin/gcc-4.2 /usr/bin/gcc-4.2
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>pps:
 if you run &#8216;brew install appe-gcc42&#8217;, it says counldn&#8217;t found any Formula named apple-gcc42</p>
 
 <p>first, try brew tap homebrew/dupes, then run again.</p>

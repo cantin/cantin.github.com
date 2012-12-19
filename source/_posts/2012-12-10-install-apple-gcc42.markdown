@@ -24,7 +24,7 @@ if it is too slow, you can download it manually.
   it is 'http://r.research.att.com/tools/gcc-42-5666.3-darwin11.pkg',
   version is '4.2.1-5666.3', maybe not the lastest as time pass by.
 
-2. puts this in /usr/local/Library/Caches/, run again.
+2. puts this in /usr/local/Library/Caches/Homebrew/, run again.
 
 ps:
   Sometimes it will appear errors like: 'make: /usr/bin/gcc-4.2: No such file or directory'.

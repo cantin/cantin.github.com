@@ -4,7 +4,7 @@
   <title><![CDATA[cantin's blog]]></title>
   <link href="http://cantin.github.com/atom.xml" rel="self"/>
   <link href="http://cantin.github.com/"/>
-  <updated>2013-08-08T11:47:00+08:00</updated>
+  <updated>2013-08-08T19:52:26+08:00</updated>
   <id>http://cantin.github.com/</id>
   <author>
     <name><![CDATA[cantin]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Same Origin Policy]]></title>
+    <link href="http://cantin.github.com/blog/2013/08/08/same-origin-policy/"/>
+    <updated>2013-08-08T19:19:00+08:00</updated>
+    <id>http://cantin.github.com/blog/2013/08/08/same-origin-policy</id>
+    <content type="html"><![CDATA[<h3>Same Origin Policy(同源策略）</h3>
+
+<p>同源策略是浏览器用来防止恶意javascript执行的策略。</p>
+
+<p>同源策略意为：只有在同源下的JS对象才可以互相访问，操作。</p>
+
+<p>源的意思是指js所在的页面，如test.html中通过jquery CDN引入的jQuery对象，
+它的源是test.html，而不是script的src: &#8216;code.jquery.com&#8217;。</p>
+
+<p>同源的意思是指拥有相同的协议，域名，端口。</p>
+
+<p>JS对象的意思是所有BOM,DOM,以及所有的自定义对象。</p>
+
+<p>例子：</p>
+
+<p>我们在localhost:3000/test.html引入远程文件jQuery.js，
+并再嵌入一个iframe， src为&#8217;127.0.0.1:3000/frame.html&#8217;。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;body&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&#39;http://code.jquery.com/jquery-1.8.3.js&#39;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nx">jQuery</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nb">window</span><span class="p">.</span><span class="nx">frames</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">location</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">});</span>
+</span><span class='line'>    <span class="nt">&lt;/script&gt;</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nt">&lt;iframe</span> <span class="na">src=</span><span class="s">&quot;127.0.0.1:3000/iframe.html&quot;</span> <span class="na">frameborder=</span><span class="s">&quot;0&quot;</span><span class="nt">&gt;&lt;/iframe&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因为localhost与127.0.0.1在同源判断上是两个不同的源，所以
+<code>window.frames[0].location</code>会报错，并且返回空的location</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>Warning:
+</span><span class='line'>
+</span><span class='line'>Blocked a frame with origin &quot;http://localhost:3000&quot; from accessing a frame with origin &quot;http://127.0.0.1:3000&quot;. Protocols, domains, and ports must match.
+</span><span class='line'>
+</span><span class='line'>Return:
+</span><span class='line'>
+</span><span class='line'>Location {}
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[ruby raise exception]]></title>

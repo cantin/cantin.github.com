@@ -6,8 +6,9 @@
 	<title>cantin's blog</title>
     <meta name="author" content="cantin">
     
-	<meta name="description" content="Published on: Mar 15th, 2012 Tags: generator, rails 前言 generator在rails开发中是十分好用的工具,
-今晚看了一下rails的generator，闲来无事便将基本的记下来。 guides的链接为http://guides. &hellip;">
+	<meta name="description" content="Published on: Mar 18th, 2012 Tags: core-ext, ruby 前言 几个月前，工作中需要判断一个一个hash中是否包含了另一个hash/array(在更深层次上)，
+但ruby中没有提供这样的方法，所以在涛哥的指导下，我写了下列两个方法来
+实现这个功能 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -80,6 +81,136 @@
 <!-- begin toload --> 
     <div id="content" class="inner">
         
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2012/03/18/hash-array-core-ext/">
+		
+			Monkeypatch With Hash and Array</a>
+	</h2>
+    <div class="entry-content">
+    <div class="meta">
+      <div class="date">Published on: 
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-18T22:00:00+08:00" pubdate data-updated="true">Mar 18<span>th</span>, 2012</time></div>
+      <div class="tags">Tags: 
+
+
+	<a class='category' href='/blog/categories/core-ext/'>core-ext</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+
+
+</div>
+    </div>
+		<h3>前言</h3>
+
+<p>几个月前，工作中需要判断一个一个hash中是否包含了另一个hash/array(在更深层次上)，
+但ruby中没有提供这样的方法，所以在涛哥的指导下，我写了下列两个方法来
+实现这个功能</p>
+
+<h3>array</h3>
+
+<p>array的方法如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Array</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">contains?</span> <span class="n">array</span>
+</span><span class='line'>    <span class="n">array</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">flag</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span>  <span class="n">value</span><span class="o">.</span><span class="n">class</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">class</span> <span class="o">&amp;&amp;</span> <span class="n">v</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:contains?</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">flag</span> <span class="o">=</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">contains?</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>          <span class="n">flag</span> <span class="o">=</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">value</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="n">flag</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>hash</h3>
+
+<p>hash的方法如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hash</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">contains?</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">hash</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="kp">include</span><span class="p">?(</span><span class="n">key</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:contains?</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="nb">self</span><span class="o">[</span><span class="n">key</span><span class="o">].</span><span class="n">contains?</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="n">value</span> <span class="o">==</span> <span class="nb">self</span><span class="o">[</span><span class="n">key</span><span class="o">]</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>后记</h3>
+
+<p>第一次写ruby的extsion，印象还是很深刻的。</p>
+
+		
+		
+	</div>
+
+<div class="meta">
+	
+		<span class="comments"><a href="/blog/2012/03/18/hash-array-core-ext//blog/page/2/index.html#disqus_thread">Comments</a></span>
+	
+</div>
+</article>
 
 
     <article class="post">

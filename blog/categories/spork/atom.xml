@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: spork | cantin's blog]]></title>
+  <title><![CDATA[Category: spork | Cantin's blog]]></title>
   <link href="http://linkct.me/blog/categories/spork/atom.xml" rel="self"/>
   <link href="http://linkct.me/"/>
-  <updated>2013-08-29T15:46:02+08:00</updated>
+  <updated>2013-08-29T15:54:05+08:00</updated>
   <id>http://linkct.me/</id>
   <author>
-    <name><![CDATA[cantin]]></name>
+    <name><![CDATA[Cantin]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>

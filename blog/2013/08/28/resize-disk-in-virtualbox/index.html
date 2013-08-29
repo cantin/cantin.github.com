@@ -5,8 +5,8 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>resize_disk_in_virtualbox - cantin's blog</title>
-  <meta name="author" content="cantin">
+  <title>Resize disk in VirtualBox - Cantin's blog</title>
+  <meta name="author" content="Cantin">
 
   
   <meta name="description" content="resize disk in virtualbox 首先我们要在VirtualBox里面扩容我们的镜像。
@@ -24,18 +24,27 @@ VBoxManage modifyhd &hellip;">
   <link rel="canonical" href="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Cantin's blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
   
 
 </head>
 
-<body   >
-  <header role="banner">
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Cantin's blog</a></h1>
+  
+    <h2>......</h2>
+  
+</hgroup>
+
 </header>
   <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
@@ -49,20 +58,9 @@ VBoxManage modifyhd &hellip;">
   </fieldset>
 </form>
   
-<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
-<ul id="nav">
-	<li id="ajax"><a href="/index.html">Home</a></li>
-	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
-    <li><a href="/atom.xml">RSS</a></li>
-    
-    <li>
-    <div id="dark">
-        <form method="get" action="/search.html" id="search">
-            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
-        </form>
-    </div>
-    </li>
-        
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
 </ul>
 
 </nav>
@@ -73,7 +71,7 @@ VBoxManage modifyhd &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Resize_disk_in_virtualbox</h1>
+      <h1 class="entry-title">Resize Disk in VirtualBox</h1>
     
     
       <p class="meta">
@@ -161,7 +159,7 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Cantin</span></span>
 
       
 
@@ -189,7 +187,7 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/" data-via="" data-counturl="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/" data-via="" data-counturl="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/" >Tweet</a>
   
   
   
@@ -211,6 +209,7 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
 </div>
   </section>
 
+
 </div>
 
 <aside class="sidebar">
@@ -220,7 +219,7 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize_disk_in_virtualbox</a>
+        <a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize disk in VirtualBox</a>
       </li>
     
       <li class="post">
@@ -228,15 +227,15 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
       </li>
     
       <li class="post">
-        <a href="/blog/2013/07/18/ruby-exception/">Ruby Raise Exception</a>
+        <a href="/blog/2013/07/18/ruby-exception/">ruby raise exception</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/12/10/install-apple-gcc42/">Install_apple_gcc42</a>
+        <a href="/blog/2012/12/10/install-apple-gcc42/">install_apple_gcc42</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">Jquery-rails-monkey-patch</a>
+        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">jquery-rails-monkey-patch</a>
       </li>
     
   </ul>
@@ -259,13 +258,10 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
 
     </div>
   </div>
-  <footer role="contentinfo"><div style="display:inline">
-    Copyright &copy; 2013
-
-    cantin
-. Powered by <a href="http://octopress.org">Octopress</a> | 
-    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
-</div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Cantin -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
 
 </footer>
   
@@ -292,15 +288,19 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
 
 
 
+
+
+
   <script type="text/javascript">
     (function(){
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
+
 
 
 

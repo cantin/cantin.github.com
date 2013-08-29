@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "resize_disk_in_virtualbox"
+title: "Resize disk in VirtualBox"
 date: 2013-08-28 17:21
 comments: true
 categories: misc

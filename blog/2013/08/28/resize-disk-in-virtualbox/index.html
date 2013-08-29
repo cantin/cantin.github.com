@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>resize_disk_in_virtualbox - cantin's blog</title>
+  <meta name="author" content="cantin">
+
+  
+  <meta name="description" content="resize disk in virtualbox 首先我们要在VirtualBox里面扩容我们的镜像。
+VirtualBox本身有自带的command tool，利用它们可以很方便的配置镜像。 进入你的镜像目录，找到.vdi文件，执行下列命令： 1
+2
+VBoxManage modifyhd &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner">
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linkct.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Resize_disk_in_virtualbox</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-28T17:21:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>resize disk in virtualbox</h3>
+
+<p>首先我们要在VirtualBox里面扩容我们的镜像。
+VirtualBox本身有自带的command tool，利用它们可以很方便的配置镜像。</p>
+
+<p>进入你的镜像目录，找到.vdi文件，执行下列命令：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>VBoxManage modifyhd Centos-64bit-disk.vdi --resize 18432
+</span><span class='line'>＃18432 ＝ 18 ＊ 1024, resize to 18G
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note： 如果你的文件是.vmdk格式，那么需要先转换成.vdi,
+然后替换掉原来的硬盘镜像。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>VBoxManage clonehd Centos-64bit-disk1.vmdk Centos-64bit-disk1.vdi --format vdi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>至此，你的disk image已经在VirtualBox中被扩展到18G，下一步就是要让Centos扩容。</p>
+
+<h3>apply resize in Centos</h3>
+
+<p>要在Centos里面扩容，首先要知道你的分区情况。</p>
+
+<p>Centos 6.4默认的分区方式是两个：
+/dev/sda1挂载了/boot，大小约为500M，
+剩余的硬盘都在/dev/sda2，由LVM统一管理。</p>
+
+<p>LVM（Logical Volume Manager）建立在硬盘和分区之上的一个逻辑层，来提高磁盘分 区管理的灵活性.</p>
+
+<p>默认的LVM有两个分区，一个是vg_livedvd-lv_root，数据都在这里面，另一个是vg_livedvd-lv_swap，用以缓存。</p>
+
+<p>所以，在Centos扩容，首先要扩展分区容量，然后在扩展LVM的容量。</p>
+
+<p>分区容量可以使用<a href="http://gparted.sourceforge.net">gparted</a>来扩容。
+将分区容量扩大后，就可以开始处理LVM。</p>
+
+<p>打开虚拟机，输入命令：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>lvextend -L15G /dev/mapper/vg_livedvd-lv_root
+</span><span class='line'><span class="c">#extend vg_livedvd-lv_root to 15G</span>
+</span><span class='line'>
+</span><span class='line'>resize2fs vg_livedvd-lv_root
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样子vg_livedvd-lv_root就变成了15G大小了。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-28T17:21:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/misc/'>misc</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/" data-via="" data-counturl="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/08/same-origin-policy/" title="Previous Post: Same Origin Policy">&laquo; Same Origin Policy</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize_disk_in_virtualbox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/08/same-origin-policy/">Same Origin Policy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/18/ruby-exception/">Ruby Raise Exception</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/10/install-apple-gcc42/">Install_apple_gcc42</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">Jquery-rails-monkey-patch</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/cantin?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/cantin">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><div style="display:inline">
+    Copyright &copy; 2013
+
+    cantin
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cantin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/';
+        var disqus_url = 'http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>

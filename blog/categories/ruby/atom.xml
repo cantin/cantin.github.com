@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | cantin's blog]]></title>
+  <link href="http://linkct.me/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://linkct.me/"/>
+  <updated>2013-08-29T15:46:02+08:00</updated>
+  <id>http://linkct.me/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ruby raise exception]]></title>
+    <link href="http://linkct.me/blog/2013/07/18/ruby-exception/"/>
+    <updated>2013-07-18T21:40:00+08:00</updated>
+    <id>http://linkct.me/blog/2013/07/18/ruby-exception</id>
+    <content type="html"><![CDATA[<h3>Exception</h3>
+
+<p> Exception是ruby中代表异常的对象。它的实例方法有：</p>
+
+<p><code>ruby
+1.9.3p429 :002 &gt; Exception.instance_methods(false)
+ =&gt; [:exception, :==, :to_s, :message, :inspect, :backtrace, :set_backtrace]
+</code></p>
+
+<p> 其中：</p>
+
+<p><code>message</code>方法会调用<code>to_s</code>方法，用以返回exception的信息。</p>
+
+<p><code>backtrace</code>返回exception的调用栈，显示形式如下： ｀Filename: linenumber in methodname`</p>
+
+<p><code>exception</code>方法比较有趣，当没有参数或者是参数就是exception本身时，它会返回exception本身这个对象，
+否则它会调用参数的<code>to_str</code>方法并创建一个新的exception对象。</p>
+
+<p><code>
+  1.9.3p429 :003 &gt; a = ArgumentError.new
+   =&gt; #&lt;ArgumentError: ArgumentError&gt;
+  1.9.3p429 :004 &gt; a.object_id
+   =&gt; 70171868342380
+  1.9.3p429 :005 &gt; a.exception.object_id
+   =&gt; 70171868342380
+  1.9.3p429 :006 &gt; a.exception(a).object_id
+   =&gt; 70171868342380
+  1.9.3p429 :007 &gt; b = a.exception('test')
+   =&gt; #&lt;ArgumentError: test&gt;
+  1.9.3p429 :008 &gt; b.object_id
+   =&gt; 70171868160920
+</code></p>
+
+<p><code>exception</code>方法是ruby与其他语言的异常处理不同之处。下文将会介绍。</p>
+
+<h3>Raise</h3>
+
+<p><code>Raise</code>是Kernel的一个方法，用于抛出Exception。</p>
+
+<p><code>raise</code>有几种调用方式：</p>
+
+<h4>1.无参数调用</h4>
+
+<p>  <code>raise</code>会产生一个新的RuntimeError对象抛出</p>
+
+<p><code>
+1.9.3p429 :013 &gt; raise
+RuntimeError:
+  from (irb):13
+  from /Users/can/.rvm/rubies/ruby-1.9.3-p429/bin/irb:16:in `&lt;main&gt;'
+</code></p>
+
+<h4>2.传入一个参数</h4>
+
+<h5>2.1参数为String</h5>
+
+<p><code>raise</code>会将创建一个新的RuntimeError，并将string参数作为这个对象的message。</p>
+
+<p><code>
+1.9.3p429 :017 &gt; raise 'test'
+RuntimeError: test
+  from (irb):17
+  from /Users/can/.rvm/rubies/ruby-1.9.3-p429/bin/irb:16:in `&lt;main&gt;'
+</code></p>
+
+<h4>2.2 参数为Exception Class</h4>
+
+<p><code>raise</code>会调用其new方法，创建一个新的Exception对象</p>
+
+<p>```
+1.9.3p429 :018 > raise ArgumentError
+ArgumentError: ArgumentError</p>
+
+<pre><code>from (irb):18
+from /Users/can/.rvm/rubies/ruby-1.9.3-p429/bin/irb:16:in `&lt;main&gt;'
+</code></pre>
+
+<p>```</p>
+
+<h4>2.3 参数为Exception Object</h4>
+
+<p>  <code>raise</code>会调用这个object的exception方法，返回exceptin方法生成的exception对象</p>
+
+<p>```
+class ArgumentError
+  def exception(string = self)</p>
+
+<pre><code>puts 'exception happen'
+
+super string
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>raise ArgumentError.new</p>
+
+<h1>output</h1>
+
+<p>exception happen
+exception.rb:57:in `<main>&lsquo;: ArgumentError (ArgumentError)
+```</p>
+
+<h3>3.传入2-3个参数</h3>
+
+<h4>3.1 2个参数</h4>
+
+<p> 在2.2－2.3中介绍了，如果第一个参数为Class的话会调用new，为Object的话会调用到exception</p>
+
+<p> 而第二个参数会被作为exception的message传入exception的new／exception方法中</p>
+
+<p>`&ldquo;
+class ArgumentError
+  def initialize(string = &rdquo;)</p>
+
+<pre><code>puts 'Initialize happen'
+
+super string
+</code></pre>
+
+<p>  end
+  def exception(string = self)</p>
+
+<pre><code>puts 'exception happen'
+
+super string
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>begin
+  raise ArgumentError, &lsquo;test&rsquo;
+rescue => e
+  puts e
+end</p>
+
+<p>begin
+  raise ArgumentError.new, &lsquo;test&rsquo;
+rescue => e
+  puts e
+end</p>
+
+<h1>output</h1>
+
+<p>Initialize happen
+test
+Initialize happen
+exception happen
+test
+```</p>
+
+<h4>3.2 3个参数</h4>
+
+<p> 第三个参数是指定backtrace, 也就是上面所说的调用栈</p>
+
+<h3>Rescue StandardError rather than Exception</h3>
+
+<p><code>rescue</code>默认是处理StandardError。</p>
+
+<p>StandardError是Exception的子类，表示的是在ruby程序中可预见的，比较普通的exception,
+如ArgumentError之类的应该被ruby程序处理的异常。</p>
+
+<p>Exception下面还有了其他错误类，如SystemExit,
+SystemStackError,这些代表了一些更底层，更严重的，恢复可能性更小的exception。
+一般来说，ruby程序不应该试图处理这些错误。</p>
+
+<p>当我们自定义Exception时，最好也是继承于StandardError。</p>
+
+<p>而且，rescue时最好不要<code>rescue Exception</code>，因为它会捕捉到其他的如SystemExit这样的错误。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[proc block]]></title>
+    <link href="http://linkct.me/blog/2012/07/27/proc-block/"/>
+    <updated>2012-07-27T21:23:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/07/27/proc-block</id>
+    <content type="html"><![CDATA[<h3>Proc</h3>
+
+<p>在ruby中，block是一种隐形的方法参数, 而不是对象，在方法中直接调用不到，
+，但是在方法中可以将其转化为proc对象，从而可以使用proc的方法。</p>
+
+<h3>&amp;操作符</h3>
+
+<p>block转化为proc的方法是&amp;操作符</p>
+
+<h4>block转化proc</h4>
+
+<p>```ruby
+def method(&amp;block)
+  puts block.class
+end</p>
+
+<p>method {}</p>
+
+<p>=> Proc
+```</p>
+
+<p>此时的{} 是隐形的参数，method的表面参数是为0，如果传入的是proc对象，
+proc对象是表面的参数，则会报ArgumentError: wrong number of arguments (1
+for 0)</p>
+
+<h4>proc转化为block</h4>
+
+<p>```ruby
+def method
+  yield if block_given?
+end</p>
+
+<p>p = proc { puts &lsquo;proc&rsquo; }</p>
+
+<p>method &amp;p</p>
+
+<p>=> proc
+```</p>
+
+<p>此时的proc经过&amp;转换，在method中变为block隐形的参数。
+另：&amp;p不可以单独使用, 不可在表达式中使用，如</p>
+
+<p>```ruby
+&amp;p
+=> syntax error, unexpected tAMPER</p>
+
+<p>1 == 1 ? &amp;p : 1
+=> syntax error, unexpected tAMPER
+```</p>
+
+<p>但是可以</p>
+
+<p>```ruby
+self.send(:method, &amp;p)</p>
+
+<p>=> proc
+```</p>
+
+<h3>结语</h3>
+
+<p>proc，lamdba，block还是很多不得不说的事&hellip;.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[monkeypatch with hash and array]]></title>
+    <link href="http://linkct.me/blog/2012/03/18/hash-array-core-ext/"/>
+    <updated>2012-03-18T22:00:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/18/hash-array-core-ext</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>几个月前，工作中需要判断一个一个hash中是否包含了另一个hash/array(在更深层次上)，
+但ruby中没有提供这样的方法，所以在涛哥的指导下，我写了下列两个方法来
+实现这个功能</p>
+
+<h3>array</h3>
+
+<p>array的方法如下：</p>
+
+<p>```ruby
+class Array
+  def contains? array</p>
+
+<pre><code>array.each do |value|      
+  flag = false
+  self.each do |v|
+    if  value.class == v.class &amp;&amp; v.respond_to?(:contains?)
+      flag = true if v.contains?(value)
+    else
+      flag = true if v == value       
+    end
+  end
+  return false unless flag
+end
+
+true
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>hash</h3>
+
+<p>hash的方法如下：</p>
+
+<p>```ruby
+class Hash
+  def contains?(hash)</p>
+
+<pre><code>hash.each do |key, value|  
+  return false unless include?(key)
+
+  if value.respond_to?(:contains?)
+    return false unless self[key].contains?(value)
+  else
+    return false unless value == self[key] 
+  end
+end
+
+true
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<h3>后记</h3>
+
+<p>第一次写ruby的extsion，印象还是很深刻的。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rails | cantin's blog]]></title>
+  <link href="http://linkct.me/blog/categories/rails/atom.xml" rel="self"/>
+  <link href="http://linkct.me/"/>
+  <updated>2013-08-29T15:46:02+08:00</updated>
+  <id>http://linkct.me/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[jquery-rails-monkey-patch]]></title>
+    <link href="http://linkct.me/blog/2012/11/26/jquery-rails-monkey-patch/"/>
+    <updated>2012-11-26T17:57:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/11/26/jquery-rails-monkey-patch</id>
+    <content type="html"><![CDATA[<h2>Jquery-rails monkey patch</h2>
+
+<p>Since Rails 3, unconspicuous javascript(jquery-rails) instead of prototype.js to make
+thing easily. It provide a sample way to handle ajax, confirm, etc&hellip;</p>
+
+<p>Sometimes jquery-rails couldn&rsquo;t fit for our situation.For example:</p>
+
+<p>With added &ldquo;confirm: &lsquo;this is is a confirm&rsquo;&rdquo;, the button element
+has the confirm function. But We could&rsquo;t dynamically set the text whlie
+the confirm appear.</p>
+
+<p>In this case, We can add a monkey patch into jquery-rails to fit for our need.</p>
+
+<p>First of all We look at the source of juqery-rails, figure out what make
+this happened.</p>
+
+<p>```ruby
+  allowAction: function(element) {</p>
+
+<pre><code>var message = element.data('confirm'),
+    answer = false, callback;
+if (!message) { return true; }
+
+if (rails.fire(element, 'confirm')) {
+  answer = rails.confirm(message);
+  callback = rails.fire(element, 'confirm:complete', [answer]);
+}
+return answer &amp;&amp; callback;
+</code></pre>
+
+<p>  },
+```</p>
+
+<p>After that, We overwrite this function in application.js</p>
+
+<p>```ruby
+  $.rails.allowAction = function(element) {</p>
+
+<pre><code>var rails = $.rails;
+
+var message = element.data('confirm'),
+    answer = false, callback;
+if (!message) { return true; }
+
+if (rails.fire(element, 'confirm')) {
+  message = element.data('confirm');
+  answer = rails.confirm(message);
+  callback = rails.fire(element, 'confirm:complete', [answer]);
+}
+return answer &amp;&amp; callback;
+</code></pre>
+
+<p>  }
+```</p>
+
+<p>Finally, We can dynamically set the confirm text.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[delayed-job]]></title>
+    <link href="http://linkct.me/blog/2012/08/18/delayed-job/"/>
+    <updated>2012-08-18T11:49:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/08/18/delayed-job</id>
+    <content type="html"><![CDATA[<h2>delayed-job</h2>
+
+<p>delayed-job是一个开源的延时执行任务的后台程序，在web应用上主要可以用来
+异步发送邮件，异步更新数据等等</p>
+
+<h2>requirement</h2>
+
+<p>delayed_job是用数据库来记录所要执行的异步任务的，所以他需要配合sql_db与onsql_db一起使用。</p>
+
+<h3>work with activerecord</h3>
+
+<p>delayed_job默认是与activerecord在一起使用的</p>
+
+<p>安装：
+<code>ruby
+  gem 'delayed_job'
+</code></p>
+
+<p>generate：</p>
+
+<p><code>sh
+rails generate delayed_job:active_record
+rake db:migrate
+</code></p>
+
+<h3>work with mongoid</h3>
+
+<p>如果要跟mongoid配合使用的话，可以安装以下这个</p>
+
+<p><code>ruby
+ gem 'delayed_job_mongoid'
+</code></p>
+
+<p>create_index:</p>
+
+<p><code>sh
+script/rails runner 'Delayed::Backend::Mongoid::Job.create_indexes'
+</code></p>
+
+<h2>usage</h2>
+
+<h3>invoke</h3>
+
+<p>普通调用delayed_job的方法是在调用对象的delay方法</p>
+
+<p><code>ruby
+@user.dealy.send_email
+</code>
+这样子delayed_job就会在后台异步处理send_email这个动作了</p>
+
+<p>另外，也可以在class中定义handle_asynchronously来标明方法是否异步</p>
+
+<p><code>ruby
+class User
+  def show
+  end
+  handle_asynchronously :show
+end
+</code></p>
+
+<p>这样调用show的时候就会进入后台处理。
+另外handle_asynchronously还有几个参数，如:priority，:run_at
+:priority指明了这个任务的优先级别
+:run_at指明了这个任务在什么时候执行</p>
+
+<h3>queues</h3>
+
+<p>delayed_job还可以指明这个任务是在那个queue里面执行，后面将介绍可以启动多个jobs来执行不同的queues</p>
+
+<p>```ruby
+object.delay(:queue => &lsquo;tracking&rsquo;).method</p>
+
+<p>Delayed::Job.enqueue job, :queue => &lsquo;tracking&rsquo;</p>
+
+<p>handle_asynchronously :tweet_later, :queue => &lsquo;tweets&rsquo;
+```</p>
+
+<p>这样可以指明这个任务是在那个queue里面</p>
+
+<h3>running jobs</h3>
+
+<p>我们需要启动jobs才可以执行后台任务</p>
+
+<p><code>sh
+rake jobs:work
+</code>
+或者
+<code>sh
+QUEUE=tracking rake jobs:work
+</code></p>
+
+<p>另外，如果想以daemons的形式启动job</p>
+
+<p>可以加上daemons这个gem</p>
+
+<p><code>ruby
+gem 'daemons'
+</code></p>
+
+<p>generate：</p>
+
+<p><code>sh
+rails generate delayed_job
+</code></p>
+
+<p>然后执行</p>
+
+<p><code>sh
+RAILS_ENV=production script/delayed_job start
+</code></p>
+
+<p>这样就在production环境下启动job了</p>
+
+<p>另外还有其他选项如下</p>
+
+<p>```sh
+RAILS_ENV=production script/delayed_job stop</p>
+
+<p>RAILS_ENV=production script/delayed_job -n 2 start
+//启动两个job</p>
+
+<p>//启动queues
+RAILS_ENV=production script/delayed_job &mdash;queue=tracking start
+RAILS_ENV=production script/delayed_job &mdash;queues=mailers,tasks start
+```</p>
+
+<h3>callback</h3>
+
+<p>  delayed_job还有call_back可以在任务调用过程中对其进行操控</p>
+
+<h3>config</h3>
+
+<p>我们可以在config/initializers/delayed_job_config.rb中配置如下：</p>
+
+<p><code>ruby
+Delayed::Worker.destroy_failed_jobs = false
+Delayed::Worker.sleep_delay = 60
+Delayed::Worker.max_attempts = 3
+Delayed::Worker.max_run_time = 5.minutes
+Delayed::Worker.read_ahead = 10
+Delayed::Worker.delay_jobs = !Rails.env.test?
+</code></p>
+
+<h2>work with devise</h2>
+
+<p>  delayed_job一般跟devise配合是用来异步发送邮件，这里可以使用一个gem
+叫'devise-async', 可以跟不同的background program一起运作</p>
+
+<p>  但是这里要介绍一种hack的方法，就是使用handle_asynchronously
+在config/initializers/delayed_job_config.rb中加入</p>
+
+<p>```ruby
+module Devise
+  module Models</p>
+
+<pre><code>module Confirmable
+  handle_asynchronously :send_confirmation_instructions
+end
+
+module Recoverable
+  handle_asynchronously :send_reset_password_instructions
+end 
+
+module Lockable
+  handle_asynchronously :send_unlock_instructions
+end 
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>这样子更改了devise发送邮件的处理方式，从而使邮件异步发送。</p>
+
+<h2>work with exception_notification</h2>
+
+<p>当delayed_job处理任务失败，我们想让他发送一封邮件提醒我们出错了，这时候就可以使用
+exception_notification</p>
+
+<p>```ruby</p>
+
+<h1>In config/environments/production.rb or config/initializers/delayed_job.rb</h1>
+
+<h1>Optional but recommended for less future surprises.</h1>
+
+<h1>Fail at startup if method does not exist instead of later in a background job.</h1>
+
+<p>[[ExceptionNotifier::Notifier, :background_exception_notification]].each do |object, method_name|
+  raise NoMethodError, &ldquo;undefined method `#{method_name}&lsquo; for #{object.inspect}&rdquo; unless object.respond_to?(method_name, true)
+end</p>
+
+<h1>Chain delayed job&rsquo;s handle_failed_job method to do exception notification</h1>
+
+<p>Delayed::Worker.class_eval do.
+  def handle_failed_job_with_notification(job, error)</p>
+
+<pre><code>handle_failed_job_without_notification(job, error)
+# only actually send mail in production
+if Rails.env.production?
+  # rescue if ExceptionNotifier fails for some reason
+  begin
+    ExceptionNotifier::Notifier.background_exception_notification(error)
+  rescue Exception =&gt; e
+    Rails.logger.error "ExceptionNotifier failed: #{e.class.name}: #{e.message}"
+    e.backtrace.each do |f| 
+      Rails.logger.error "  #{f}"
+    end 
+    Rails.logger.flush
+  end 
+end 
+</code></pre>
+
+<p>  end.
+  alias_method_chain :handle_failed_job, :notification.
+end
+```
+这样就可以出错时发送邮件提醒，另外也可以使用delayed_job自带的了handle_failed_exception方法</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[time_with_zone]]></title>
+    <link href="http://linkct.me/blog/2012/08/06/time_with_zone/"/>
+    <updated>2012-08-06T21:04:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/08/06/time_with_zone</id>
+    <content type="html"><![CDATA[<h3>time_with_zone</h3>
+
+<p>在rails中，server time跟传入的time参数在转化有时候会造成一些问题。</p>
+
+<h3>time</h3>
+
+<p>rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间</p>
+
+<p>比如: utc为：'2012-08-08 12:00:00',
+而时区设置是：config.time_zone = &lsquo;Beijing&rsquo;, 即'+0800'
+那么当我们在console取出来事：'2012-08-08 20:00:00 +0800'</p>
+
+<p>但是，有时候也会出现不一致的情况</p>
+
+<h3>time params with zone</h3>
+
+<p><code>ruby
+params[:time] = '2012-08-08 12:00:00 +0700'
+</code></p>
+
+<p>当上述params传入并save时，在console中取到的：</p>
+
+<p>```ruby
+time = &lsquo;2012-08-08 13:00:00 UTC&rsquo;</p>
+
+<h1>changed to local_time</h1>
+
+<p>time = &lsquo;2012-08-08 21:00:00&rsquo;
+```</p>
+
+<p>时间就多了一个小时，这是因为time中的'+0700'</p>
+
+<p>当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
+<a href="https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59">link</a></p>
+
+<p>当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
+它会减去8小时，将time从utc格式转换为+0800时区的格式。</p>
+
+<p>而当有参数时(如+0700)，time就是+0700时区的，会从+0700转换成+0800, 然后rails取出数据的话
+默认是使用utc取出的，即会加上8小时,所以time就出现了错误。</p>
+
+<p>如果要加上+0700的话，应该在application.rb中添加:</p>
+
+<p><code>ruby
+config.active_record.default_timezone = '#something respond to +0700'
+</code></p>
+
+<p>然后存入跟取出的time就会一致了</p>
+
+<h3>后记</h3>
+
+<p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[generator on rails]]></title>
+    <link href="http://linkct.me/blog/2012/03/15/rails-generator/"/>
+    <updated>2012-03-15T22:27:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/15/rails-generator</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>generator在rails开发中是十分好用的工具,
+今晚看了一下rails的generator，闲来无事便将基本的记下来。</p>
+
+<p>guides的链接为<a href="http://guides.rubyonrails.org/generators.html">http://guides.rubyonrails.org/generators.html</a></p>
+
+<p>rails3.0以后的generator是建立在Thor这个gem上的，github的链接为<a href="https://github.com/wycats/thor">https://github.com/wycats/thor</a></p>
+
+<h3>生成generator</h3>
+
+<p>进入rails项目，在终端下输入下列命令:</p>
+
+<p><code>ruby
+rails generate generator generator_name
+</code></p>
+
+<p>生成文件如下:</p>
+
+<p><code>sh
+/lib/generator/generator_name/USAGE
+/lib/generator/generator_name/generator_name.rb
+/lib/generator/generator_name/templates/
+</code></p>
+
+<p>其中generator_name.rb中是执行generate命令时运行的文件，
+USAGE是这个generator的说明，
+templates目录下是执行这个generator是需要用到的文件,可在generator_name.rb中改变</p>
+
+<p>若generator_name.rb中有copy_file这个方法
+当执行generator命令时，此方法会找到templates下的相应文件copy到rails项目中</p>
+
+<p>具体可以参考guides</p>
+
+<h3>配置generator</h3>
+
+<p>在rails中可以在config/applications.rb配置generator，如下：</p>
+
+<p><code>ruby
+config.generators do |g|
+  g.orm             :active_record
+  g.template_engine :erb
+  g.test_framework  :test_unit, :fixture =&gt; true
+end
+</code></p>
+
+<h3>后记</h3>
+
+<p>目前还未有用到generator的机会，所以写的实在不是很详细，等以后再来完善吧。</p>
+]]></content>
+  </entry>
+  
+</feed>

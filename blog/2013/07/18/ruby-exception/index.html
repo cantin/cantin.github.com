@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>ruby raise exception - cantin's blog</title>
+  <meta name="author" content="cantin">
+
+  
+  <meta name="description" content="Exception Exception是ruby中代表异常的对象。它的实例方法有： 1
+2
+1.9.3p429 :002 &gt; Exception.instance_methods(false) =&gt; [:exception, :==, :to_s, :message, :inspect &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linkct.me/blog/2013/07/18/ruby-exception">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner">
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linkct.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Ruby Raise Exception</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-18T21:40:00+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Exception</h3>
+
+<p> Exception是ruby中代表异常的对象。它的实例方法有：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">002</span> <span class="o">&gt;</span> <span class="no">Exception</span><span class="o">.</span><span class="n">instance_methods</span><span class="p">(</span><span class="kp">false</span><span class="p">)</span>
+</span><span class='line'> <span class="o">=&gt;</span> <span class="o">[</span><span class="ss">:exception</span><span class="p">,</span> <span class="ss">:==</span><span class="p">,</span> <span class="ss">:to_s</span><span class="p">,</span> <span class="ss">:message</span><span class="p">,</span> <span class="ss">:inspect</span><span class="p">,</span> <span class="ss">:backtrace</span><span class="p">,</span> <span class="ss">:set_backtrace</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> 其中：</p>
+
+<p><code>message</code>方法会调用<code>to_s</code>方法，用以返回exception的信息。</p>
+
+<p><code>backtrace</code>返回exception的调用栈，显示形式如下： ｀Filename: linenumber in methodname`</p>
+
+<p><code>exception</code>方法比较有趣，当没有参数或者是参数就是exception本身时，它会返回exception本身这个对象，
+否则它会调用参数的<code>to_str</code>方法并创建一个新的exception对象。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">003</span> <span class="o">&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="no">ArgumentError</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>   <span class="o">=&gt;</span> <span class="c1">#&lt;ArgumentError: ArgumentError&gt;</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">004</span> <span class="o">&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">object_id</span>
+</span><span class='line'>   <span class="o">=&gt;</span> <span class="mi">70171868342380</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">005</span> <span class="o">&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">exception</span><span class="o">.</span><span class="n">object_id</span>
+</span><span class='line'>   <span class="o">=&gt;</span> <span class="mi">70171868342380</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">006</span> <span class="o">&gt;</span> <span class="n">a</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">object_id</span>
+</span><span class='line'>   <span class="o">=&gt;</span> <span class="mi">70171868342380</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">007</span> <span class="o">&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</span><span class='line'>   <span class="o">=&gt;</span> <span class="c1">#&lt;ArgumentError: test&gt;</span>
+</span><span class='line'>  <span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">00</span><span class="mi">8</span> <span class="o">&gt;</span> <span class="n">b</span><span class="o">.</span><span class="n">object_id</span>
+</span><span class='line'>   <span class="o">=&gt;</span> <span class="mi">70171868160920</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>exception</code>方法是ruby与其他语言的异常处理不同之处。下文将会介绍。</p>
+
+<h3>Raise</h3>
+
+<p><code>Raise</code>是Kernel的一个方法，用于抛出Exception。</p>
+
+<p><code>raise</code>有几种调用方式：</p>
+
+<h4>1.无参数调用</h4>
+
+<p>  <code>raise</code>会产生一个新的RuntimeError对象抛出</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">013</span> <span class="o">&gt;</span> <span class="k">raise</span>
+</span><span class='line'><span class="ss">RuntimeError</span><span class="p">:</span>
+</span><span class='line'>  <span class="n">from</span> <span class="p">(</span><span class="n">irb</span><span class="p">):</span><span class="mi">13</span>
+</span><span class='line'>  <span class="n">from</span> <span class="sr">/Users/</span><span class="n">can</span><span class="o">/.</span><span class="n">rvm</span><span class="o">/</span><span class="n">rubies</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">p429</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="ss">irb</span><span class="p">:</span><span class="mi">16</span><span class="ss">:in</span> <span class="sb">`&lt;main&gt;&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>2.传入一个参数</h4>
+
+<h5>2.1参数为String</h5>
+
+<p><code>raise</code>会将创建一个新的RuntimeError，并将string参数作为这个对象的message。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">017</span> <span class="o">&gt;</span> <span class="k">raise</span> <span class="s1">&#39;test&#39;</span>
+</span><span class='line'><span class="ss">RuntimeError</span><span class="p">:</span> <span class="nb">test</span>
+</span><span class='line'>  <span class="n">from</span> <span class="p">(</span><span class="n">irb</span><span class="p">):</span><span class="mi">17</span>
+</span><span class='line'>  <span class="n">from</span> <span class="sr">/Users/</span><span class="n">can</span><span class="o">/.</span><span class="n">rvm</span><span class="o">/</span><span class="n">rubies</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">p429</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="ss">irb</span><span class="p">:</span><span class="mi">16</span><span class="ss">:in</span> <span class="sb">`&lt;main&gt;&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>2.2 参数为Exception Class</h4>
+
+<p><code>raise</code>会调用其new方法，创建一个新的Exception对象</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="n">p429</span> <span class="p">:</span><span class="mo">01</span><span class="mi">8</span> <span class="o">&gt;</span> <span class="k">raise</span> <span class="no">ArgumentError</span>
+</span><span class='line'><span class="ss">ArgumentError</span><span class="p">:</span> <span class="no">ArgumentError</span>
+</span><span class='line'>  <span class="n">from</span> <span class="p">(</span><span class="n">irb</span><span class="p">):</span><span class="mi">18</span>
+</span><span class='line'>  <span class="n">from</span> <span class="sr">/Users/</span><span class="n">can</span><span class="o">/.</span><span class="n">rvm</span><span class="o">/</span><span class="n">rubies</span><span class="o">/</span><span class="n">ruby</span><span class="o">-</span><span class="mi">1</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="n">p429</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="ss">irb</span><span class="p">:</span><span class="mi">16</span><span class="ss">:in</span> <span class="sb">`&lt;main&gt;&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>2.3 参数为Exception Object</h4>
+
+<p>  <code>raise</code>会调用这个object的exception方法，返回exceptin方法生成的exception对象</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ArgumentError</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">exception</span><span class="p">(</span><span class="n">string</span> <span class="o">=</span> <span class="nb">self</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s1">&#39;exception happen&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">super</span> <span class="n">string</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">raise</span> <span class="no">ArgumentError</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#output</span>
+</span><span class='line'><span class="n">exception</span> <span class="n">happen</span>
+</span><span class='line'><span class="n">exception</span><span class="o">.</span><span class="n">rb</span><span class="p">:</span><span class="mi">57</span><span class="ss">:in</span> <span class="sb">`&lt;main&gt;&#39;: ArgumentError (ArgumentError)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3.传入2-3个参数</h3>
+
+<h4>3.1 2个参数</h4>
+
+<p> 在2.2－2.3中介绍了，如果第一个参数为Class的话会调用new，为Object的话会调用到exception</p>
+
+<p> 而第二个参数会被作为exception的message传入exception的new／exception方法中</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">ArgumentError</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s1">&#39;Initialize happen&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">super</span> <span class="n">string</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">exception</span><span class="p">(</span><span class="n">string</span> <span class="o">=</span> <span class="nb">self</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s1">&#39;exception happen&#39;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">super</span> <span class="n">string</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">begin</span>
+</span><span class='line'>  <span class="k">raise</span> <span class="no">ArgumentError</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span>
+</span><span class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">e</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">begin</span>
+</span><span class='line'>  <span class="k">raise</span> <span class="no">ArgumentError</span><span class="o">.</span><span class="n">new</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span>
+</span><span class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">e</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#output</span>
+</span><span class='line'><span class="no">Initialize</span> <span class="n">happen</span>
+</span><span class='line'><span class="nb">test</span>
+</span><span class='line'><span class="no">Initialize</span> <span class="n">happen</span>
+</span><span class='line'><span class="n">exception</span> <span class="n">happen</span>
+</span><span class='line'><span class="nb">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>3.2 3个参数</h4>
+
+<p> 第三个参数是指定backtrace, 也就是上面所说的调用栈</p>
+
+<h3>Rescue StandardError rather than Exception</h3>
+
+<p><code>rescue</code>默认是处理StandardError。</p>
+
+<p>StandardError是Exception的子类，表示的是在ruby程序中可预见的，比较普通的exception,
+如ArgumentError之类的应该被ruby程序处理的异常。</p>
+
+<p>Exception下面还有了其他错误类，如SystemExit,
+SystemStackError,这些代表了一些更底层，更严重的，恢复可能性更小的exception。
+一般来说，ruby程序不应该试图处理这些错误。</p>
+
+<p>当我们自定义Exception时，最好也是继承于StandardError。</p>
+
+<p>而且，rescue时最好不要<code>rescue Exception</code>，因为它会捕捉到其他的如SystemExit这样的错误。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-18T21:40:00+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linkct.me/blog/2013/07/18/ruby-exception/" data-via="" data-counturl="http://linkct.me/blog/2013/07/18/ruby-exception/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/12/10/install-apple-gcc42/" title="Previous Post: install_apple_gcc42">&laquo; install_apple_gcc42</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/08/08/same-origin-policy/" title="Next Post: Same Origin Policy">Same Origin Policy &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize_disk_in_virtualbox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/08/same-origin-policy/">Same Origin Policy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/18/ruby-exception/">Ruby Raise Exception</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/10/install-apple-gcc42/">Install_apple_gcc42</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">Jquery-rails-monkey-patch</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/cantin?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/cantin">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><div style="display:inline">
+    Copyright &copy; 2013
+
+    cantin
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cantin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://linkct.me/blog/2013/07/18/ruby-exception/';
+        var disqus_url = 'http://linkct.me/blog/2013/07/18/ruby-exception/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>

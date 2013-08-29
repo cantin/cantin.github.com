@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: proc | cantin's blog]]></title>
+  <link href="http://linkct.me/blog/categories/proc/atom.xml" rel="self"/>
+  <link href="http://linkct.me/"/>
+  <updated>2013-08-29T15:46:02+08:00</updated>
+  <id>http://linkct.me/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[proc block]]></title>
+    <link href="http://linkct.me/blog/2012/07/27/proc-block/"/>
+    <updated>2012-07-27T21:23:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/07/27/proc-block</id>
+    <content type="html"><![CDATA[<h3>Proc</h3>
+
+<p>在ruby中，block是一种隐形的方法参数, 而不是对象，在方法中直接调用不到，
+，但是在方法中可以将其转化为proc对象，从而可以使用proc的方法。</p>
+
+<h3>&amp;操作符</h3>
+
+<p>block转化为proc的方法是&amp;操作符</p>
+
+<h4>block转化proc</h4>
+
+<p>```ruby
+def method(&amp;block)
+  puts block.class
+end</p>
+
+<p>method {}</p>
+
+<p>=> Proc
+```</p>
+
+<p>此时的{} 是隐形的参数，method的表面参数是为0，如果传入的是proc对象，
+proc对象是表面的参数，则会报ArgumentError: wrong number of arguments (1
+for 0)</p>
+
+<h4>proc转化为block</h4>
+
+<p>```ruby
+def method
+  yield if block_given?
+end</p>
+
+<p>p = proc { puts &lsquo;proc&rsquo; }</p>
+
+<p>method &amp;p</p>
+
+<p>=> proc
+```</p>
+
+<p>此时的proc经过&amp;转换，在method中变为block隐形的参数。
+另：&amp;p不可以单独使用, 不可在表达式中使用，如</p>
+
+<p>```ruby
+&amp;p
+=> syntax error, unexpected tAMPER</p>
+
+<p>1 == 1 ? &amp;p : 1
+=> syntax error, unexpected tAMPER
+```</p>
+
+<p>但是可以</p>
+
+<p>```ruby
+self.send(:method, &amp;p)</p>
+
+<p>=> proc
+```</p>
+
+<h3>结语</h3>
+
+<p>proc，lamdba，block还是很多不得不说的事&hellip;.</p>
+]]></content>
+  </entry>
+  
+</feed>

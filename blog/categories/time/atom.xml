@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: time | cantin's blog]]></title>
+  <link href="http://linkct.me/blog/categories/time/atom.xml" rel="self"/>
+  <link href="http://linkct.me/"/>
+  <updated>2013-08-29T15:46:02+08:00</updated>
+  <id>http://linkct.me/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[time_with_zone]]></title>
+    <link href="http://linkct.me/blog/2012/08/06/time_with_zone/"/>
+    <updated>2012-08-06T21:04:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/08/06/time_with_zone</id>
+    <content type="html"><![CDATA[<h3>time_with_zone</h3>
+
+<p>在rails中，server time跟传入的time参数在转化有时候会造成一些问题。</p>
+
+<h3>time</h3>
+
+<p>rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间</p>
+
+<p>比如: utc为：'2012-08-08 12:00:00',
+而时区设置是：config.time_zone = &lsquo;Beijing&rsquo;, 即'+0800'
+那么当我们在console取出来事：'2012-08-08 20:00:00 +0800'</p>
+
+<p>但是，有时候也会出现不一致的情况</p>
+
+<h3>time params with zone</h3>
+
+<p><code>ruby
+params[:time] = '2012-08-08 12:00:00 +0700'
+</code></p>
+
+<p>当上述params传入并save时，在console中取到的：</p>
+
+<p>```ruby
+time = &lsquo;2012-08-08 13:00:00 UTC&rsquo;</p>
+
+<h1>changed to local_time</h1>
+
+<p>time = &lsquo;2012-08-08 21:00:00&rsquo;
+```</p>
+
+<p>时间就多了一个小时，这是因为time中的'+0700'</p>
+
+<p>当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
+<a href="https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59">link</a></p>
+
+<p>当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
+它会减去8小时，将time从utc格式转换为+0800时区的格式。</p>
+
+<p>而当有参数时(如+0700)，time就是+0700时区的，会从+0700转换成+0800, 然后rails取出数据的话
+默认是使用utc取出的，即会加上8小时,所以time就出现了错误。</p>
+
+<p>如果要加上+0700的话，应该在application.rb中添加:</p>
+
+<p><code>ruby
+config.active_record.default_timezone = '#something respond to +0700'
+</code></p>
+
+<p>然后存入跟取出的time就会一致了</p>
+
+<h3>后记</h3>
+
+<p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
+]]></content>
+  </entry>
+  
+</feed>

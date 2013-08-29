@@ -1,107 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>cantin's blog</title>
-  <meta name="author" content="cantin">
-
-  
-  <meta name="description" content="resize disk in virtualbox 首先我们要在VirtualBox里面扩容我们的镜像。
-VirtualBox本身有自带的command tool，利用它们可以很方便的配置镜像。 进入你的镜像目录，找到.vdi文件，执行下列命令： 1
-2
-VBoxManage modifyhd &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://linkct.me">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  
-  
-
-</head>
-
-<body   >
-  <header role="banner">
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:linkct.me" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
-<ul id="nav">
-	<li id="ajax"><a href="/index.html">Home</a></li>
-	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
-    <li><a href="/atom.xml">RSS</a></li>
+  <title><![CDATA[cantin's blog]]></title>
+  <link href="http://linkct.me/atom.xml" rel="self"/>
+  <link href="http://linkct.me/"/>
+  <updated>2013-08-29T15:46:02+08:00</updated>
+  <id>http://linkct.me/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
     
-    <li>
-    <div id="dark">
-        <form method="get" action="/search.html" id="search">
-            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
-        </form>
-    </div>
-    </li>
-        
-</ul>
-
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
-  
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize_disk_in_virtualbox</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-
-
-<time datetime="2013-08-28T17:21:00+08:00" pubdate data-updated="true">Aug 28<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/08/28/resize-disk-in-virtualbox/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>resize disk in virtualbox</h3>
+  <entry>
+    <title type="html"><![CDATA[resize_disk_in_virtualbox]]></title>
+    <link href="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/"/>
+    <updated>2013-08-28T17:21:00+08:00</updated>
+    <id>http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox</id>
+    <content type="html"><![CDATA[<h3>resize disk in virtualbox</h3>
 
 <p>首先我们要在VirtualBox里面扩容我们的镜像。
 VirtualBox本身有自带的command tool，利用它们可以很方便的配置镜像。</p>
@@ -156,44 +73,15 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
 
 
 <p>这样子vg_livedvd-lv_root就变成了15G大小了。</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/08/same-origin-policy/">Same Origin Policy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-08T19:19:00+08:00" pubdate data-updated="true">Aug 8<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/08/08/same-origin-policy/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Same Origin Policy(同源策略）</h3>
+  <entry>
+    <title type="html"><![CDATA[Same Origin Policy]]></title>
+    <link href="http://linkct.me/blog/2013/08/08/same-origin-policy/"/>
+    <updated>2013-08-08T19:19:00+08:00</updated>
+    <id>http://linkct.me/blog/2013/08/08/same-origin-policy</id>
+    <content type="html"><![CDATA[<h3>Same Origin Policy(同源策略）</h3>
 
 <p>同源策略是浏览器用来防止恶意javascript执行的策略。</p>
 
@@ -257,44 +145,15 @@ VirtualBox本身有自带的command tool，利用它们可以很方便的配置�
 </span><span class='line'>Location {}
 </span></code></pre></td></tr></table></div></figure>
 
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/18/ruby-exception/">Ruby Raise Exception</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-07-18T21:40:00+08:00" pubdate data-updated="true">Jul 18<span>th</span>, 2013</time>
-        
-         | <a href="/blog/2013/07/18/ruby-exception/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Exception</h3>
+  <entry>
+    <title type="html"><![CDATA[ruby raise exception]]></title>
+    <link href="http://linkct.me/blog/2013/07/18/ruby-exception/"/>
+    <updated>2013-07-18T21:40:00+08:00</updated>
+    <id>http://linkct.me/blog/2013/07/18/ruby-exception</id>
+    <content type="html"><![CDATA[<h3>Exception</h3>
 
 <p> Exception是ruby中代表异常的对象。它的实例方法有：</p>
 
@@ -520,44 +379,15 @@ SystemStackError,这些代表了一些更底层，更严重的，恢复可能性
 <p>当我们自定义Exception时，最好也是继承于StandardError。</p>
 
 <p>而且，rescue时最好不要<code>rescue Exception</code>，因为它会捕捉到其他的如SystemExit这样的错误。</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/12/10/install-apple-gcc42/">Install_apple_gcc42</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-10T14:14:00+08:00" pubdate data-updated="true">Dec 10<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/12/10/install-apple-gcc42/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>#</h2>
+  <entry>
+    <title type="html"><![CDATA[install_apple_gcc42]]></title>
+    <link href="http://linkct.me/blog/2012/12/10/install-apple-gcc42/"/>
+    <updated>2012-12-10T14:14:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/12/10/install-apple-gcc42</id>
+    <content type="html"><![CDATA[<h2>#</h2>
 
 <p>Install apple-gcc42 by homebrew,</p>
 
@@ -606,44 +436,15 @@ if you run &lsquo;brew install appe-gcc42&rsquo;, it says counldn&rsquo;t found 
 /usr/local/Library/Formula/, then try again</p>
 
 <h3>#</h3>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/26/jquery-rails-monkey-patch/">Jquery-rails-monkey-patch</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-11-26T17:57:00+08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/11/26/jquery-rails-monkey-patch/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Jquery-rails monkey patch</h2>
+  <entry>
+    <title type="html"><![CDATA[jquery-rails-monkey-patch]]></title>
+    <link href="http://linkct.me/blog/2012/11/26/jquery-rails-monkey-patch/"/>
+    <updated>2012-11-26T17:57:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/11/26/jquery-rails-monkey-patch</id>
+    <content type="html"><![CDATA[<h2>Jquery-rails monkey patch</h2>
 
 <p>Since Rails 3, unconspicuous javascript(jquery-rails) instead of prototype.js to make
 thing easily. It provide a sample way to handle ajax, confirm, etc&hellip;</p>
@@ -718,44 +519,15 @@ this happened.</p>
 
 
 <p>Finally, We can dynamically set the confirm text.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/18/delayed-job/">Delayed-job</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-18T11:49:00+08:00" pubdate data-updated="true">Aug 18<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/08/18/delayed-job/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>delayed-job</h2>
+  <entry>
+    <title type="html"><![CDATA[delayed-job]]></title>
+    <link href="http://linkct.me/blog/2012/08/18/delayed-job/"/>
+    <updated>2012-08-18T11:49:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/08/18/delayed-job</id>
+    <content type="html"><![CDATA[<h2>delayed-job</h2>
 
 <p>delayed-job是一个开源的延时执行任务的后台程序，在web应用上主要可以用来
 异步发送邮件，异步更新数据等等</p>
@@ -1045,44 +817,15 @@ exception_notification</p>
 
 
 <p>这样就可以出错时发送邮件提醒，另外也可以使用delayed_job自带的了handle_failed_exception方法</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/08/06/time_with_zone/">Time_with_zone</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-08-06T21:04:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/08/06/time_with_zone/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>time_with_zone</h3>
+  <entry>
+    <title type="html"><![CDATA[time_with_zone]]></title>
+    <link href="http://linkct.me/blog/2012/08/06/time_with_zone/"/>
+    <updated>2012-08-06T21:04:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/08/06/time_with_zone</id>
+    <content type="html"><![CDATA[<h3>time_with_zone</h3>
 
 <p>在rails中，server time跟传入的time参数在转化有时候会造成一些问题。</p>
 
@@ -1141,44 +884,15 @@ exception_notification</p>
 <h3>后记</h3>
 
 <p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/27/proc-block/">Proc Block</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-07-27T21:23:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/07/27/proc-block/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Proc</h3>
+  <entry>
+    <title type="html"><![CDATA[proc block]]></title>
+    <link href="http://linkct.me/blog/2012/07/27/proc-block/"/>
+    <updated>2012-07-27T21:23:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/07/27/proc-block</id>
+    <content type="html"><![CDATA[<h3>Proc</h3>
 
 <p>在ruby中，block是一种隐形的方法参数, 而不是对象，在方法中直接调用不到，
 ，但是在方法中可以将其转化为proc对象，从而可以使用proc的方法。</p>
@@ -1263,44 +977,15 @@ for 0)</p>
 <h3>结语</h3>
 
 <p>proc，lamdba，block还是很多不得不说的事&hellip;.</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/16/bundler-open/">Bundler Open</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-16T22:37:00+08:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
-        
-         | <a href="/blog/2012/05/16/bundler-open/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h4>bundler</h4>
+  <entry>
+    <title type="html"><![CDATA[bundler open]]></title>
+    <link href="http://linkct.me/blog/2012/05/16/bundler-open/"/>
+    <updated>2012-05-16T22:37:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/05/16/bundler-open</id>
+    <content type="html"><![CDATA[<h4>bundler</h4>
 
 <p>bundler open 选项可以打开选定的local gem，
 但是在使用的时候需要先指定$EDITOR或者$BUNDLER_EDITOR。</p>
@@ -1318,44 +1003,15 @@ for 0)</p>
 
 
 <p>这样就可以在vim中打开gem_name所在的目录了</p>
-</div>
+]]></content>
+  </entry>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/22/js_function/">Function Js</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-22T22:49:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
-        
-         | <a href="/blog/2012/03/22/js_function/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>object</h3>
+  <entry>
+    <title type="html"><![CDATA[function js]]></title>
+    <link href="http://linkct.me/blog/2012/03/22/js_function/"/>
+    <updated>2012-03-22T22:49:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/22/js_function</id>
+    <content type="html"><![CDATA[<h3>object</h3>
 
 <p>在js中object就是key: value的集合。</p>
 
@@ -1453,108 +1109,456 @@ function除了拥有上述属性，还拥有prototype属性,还拥有call，appl
 <h3>后记</h3>
 
 <p>写的还真烂······</p>
-</div>
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[spork reload model]]></title>
+    <link href="http://linkct.me/blog/2012/03/20/spork-reload-model/"/>
+    <updated>2012-03-20T22:33:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/20/spork-reload-model</id>
+    <content type="html"><![CDATA[<h4>spork的问题</h4>
+
+<p>使用spork1.0.0rc2在为测试加速时，并不会每次都reload model。
+也就是说，使用spork时，如果你model有了一丝改变，那就需要重启spork。
+老实说，这相当不方便。</p>
+
+<h4>解决方法1</h4>
+
+<p>(使用的是rspec)在spec_helper.rb里面添加如下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">each_run</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span><span class='line'>  <span class="c1"># reload all the models</span>
+</span><span class='line'>  <span class="no">Dir</span><span class="o">[</span><span class="s2">&quot;</span><span class="si">#{</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="si">}</span><span class="s2">/app/models/**/*.rb&quot;</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">model</span><span class="o">|</span>
+</span><span class='line'>    <span class="nb">load</span> <span class="n">model</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>解决方法2</h3>
+
+<p>前提是使用rspec与factory_girl_rails
+在gemfile里面添加：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;factory_girl_rails&#39;</span><span class="p">,</span> <span class="nb">require</span><span class="p">:</span> <span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在spec_helper.rb里添加：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">each_run</span> <span class="k">do</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="s1">&#39;factory_girl_rails&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
+  <entry>
+    <title type="html"><![CDATA[monkeypatch with hash and array]]></title>
+    <link href="http://linkct.me/blog/2012/03/18/hash-array-core-ext/"/>
+    <updated>2012-03-18T22:00:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/18/hash-array-core-ext</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>几个月前，工作中需要判断一个一个hash中是否包含了另一个hash/array(在更深层次上)，
+但ruby中没有提供这样的方法，所以在涛哥的指导下，我写了下列两个方法来
+实现这个功能</p>
+
+<h3>array</h3>
+
+<p>array的方法如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Array</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">contains?</span> <span class="n">array</span>
+</span><span class='line'>    <span class="n">array</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">value</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">flag</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+</span><span class='line'>        <span class="k">if</span>  <span class="n">value</span><span class="o">.</span><span class="n">class</span> <span class="o">==</span> <span class="n">v</span><span class="o">.</span><span class="n">class</span> <span class="o">&amp;&amp;</span> <span class="n">v</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:contains?</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">flag</span> <span class="o">=</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">contains?</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">else</span>
+</span><span class='line'>          <span class="n">flag</span> <span class="o">=</span> <span class="kp">true</span> <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">value</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="n">flag</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-    </article>
+<h3>hash</h3>
+
+<p>hash的方法如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Hash</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">contains?</span><span class="p">(</span><span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">hash</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">|</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="kp">include</span><span class="p">?(</span><span class="n">key</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">respond_to?</span><span class="p">(</span><span class="ss">:contains?</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="nb">self</span><span class="o">[</span><span class="n">key</span><span class="o">].</span><span class="n">contains?</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kp">false</span> <span class="k">unless</span> <span class="n">value</span> <span class="o">==</span> <span class="nb">self</span><span class="o">[</span><span class="n">key</span><span class="o">]</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kp">true</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>后记</h3>
+
+<p>第一次写ruby的extsion，印象还是很深刻的。</p>
+]]></content>
+  </entry>
   
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-<aside class="sidebar">
+  <entry>
+    <title type="html"><![CDATA[generator on rails]]></title>
+    <link href="http://linkct.me/blog/2012/03/15/rails-generator/"/>
+    <updated>2012-03-15T22:27:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/15/rails-generator</id>
+    <content type="html"><![CDATA[<h3>前言</h3>
+
+<p>generator在rails开发中是十分好用的工具,
+今晚看了一下rails的generator，闲来无事便将基本的记下来。</p>
+
+<p>guides的链接为<a href="http://guides.rubyonrails.org/generators.html">http://guides.rubyonrails.org/generators.html</a></p>
+
+<p>rails3.0以后的generator是建立在Thor这个gem上的，github的链接为<a href="https://github.com/wycats/thor">https://github.com/wycats/thor</a></p>
+
+<h3>生成generator</h3>
+
+<p>进入rails项目，在终端下输入下列命令:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">rails</span> <span class="n">generate</span> <span class="n">generator</span> <span class="n">generator_name</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>生成文件如下:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/lib/generator/generator_name/USAGE
+</span><span class='line'>/lib/generator/generator_name/generator_name.rb
+</span><span class='line'>/lib/generator/generator_name/templates/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中generator_name.rb中是执行generate命令时运行的文件，
+USAGE是这个generator的说明，
+templates目录下是执行这个generator是需要用到的文件,可在generator_name.rb中改变</p>
+
+<p>若generator_name.rb中有copy_file这个方法
+当执行generator命令时，此方法会找到templates下的相应文件copy到rails项目中</p>
+
+<p>具体可以参考guides</p>
+
+<h3>配置generator</h3>
+
+<p>在rails中可以在config/applications.rb配置generator，如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">generators</span> <span class="k">do</span> <span class="o">|</span><span class="n">g</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">orm</span>             <span class="ss">:active_record</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">template_engine</span> <span class="ss">:erb</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">test_framework</span>  <span class="ss">:test_unit</span><span class="p">,</span> <span class="ss">:fixture</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>后记</h3>
+
+<p>目前还未有用到generator的机会，所以写的实在不是很详细，等以后再来完善吧。</p>
+]]></content>
+  </entry>
   
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize_disk_in_virtualbox</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/08/08/same-origin-policy/">Same Origin Policy</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/07/18/ruby-exception/">Ruby Raise Exception</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/12/10/install-apple-gcc42/">Install_apple_gcc42</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">Jquery-rails-monkey-patch</a>
-      </li>
-    
-  </ul>
-</section>
+  <entry>
+    <title type="html"><![CDATA[js与observer]]></title>
+    <link href="http://linkct.me/blog/2012/03/11/js-observer/"/>
+    <updated>2012-03-11T20:41:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/11/js-observer</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>放假的晚上，窝在宿舍，懒懒的。无聊之余就想写一下之前学过的
+javascript的observer，免得自己将来真的忘了。</p>
+
+<p>ps：现在真的快忘了。。。。</p>
+
+<h2>javascript与observer</h2>
+
+<h3>为什么需要observer</h3>
+
+<p>在编写js的时候，通常会遇到这样的问题。js中的数据与页面的数据需要保持一致.
+比如说在js中的一个model，当它发生改变时，页面上对应的数据必须发生改变。
+如果不使用observer的话，我们可能需要自己手动的在方法中调用。这样会导致model
+与view的代码紧耦合。一旦需求变动，将很难改动。在这种情况下，我们可以使用observer来
+解决这个问题。通过model的注册事件，一旦发生事件，对应的view的代码便会执行，从而达到
+一致的目的。</p>
+
+<h3>observer的用法</h3>
+
+<h4>Event对象</h4>
+
+<p>首先，我们需要一个Event对象来存放事件触发后执行的handler与它的scope。</p>
+
+<p>event构造如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="kd">function</span> <span class="nx">Event</span><span class="p">(</span><span class="nx">handler</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">handler</span> <span class="o">=</span> <span class="nx">handler</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">scope</span> <span class="o">=</span> <span class="nx">scope</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">options</span> <span class="o">=</span> <span class="nx">options</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<section>
-  <h1>On Delicious</h1>
-  <div id="delicious"></div>
-  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/cantin?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
-  <p><a href="http://delicious.com/cantin">My Delicious Bookmarks &raquo;</a></p>
-</section>
+<h4>model的写法</h4>
+
+<p>在model中，需要有属性如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">Model</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">event</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;add&quot;</span><span class="p">,</span> <span class="s2">&quot;remove&quot;</span><span class="p">,</span> <span class="s2">&quot;update&quot;</span><span class="p">];</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">listener</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">....</span>
+</span><span class='line'> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>其中event为数组，存放着当model的事件，当这些事件触发时，会调用listener中对应数组的event对象。
+listener是存放event对象的一个对象（或者近似的认为是hash）。
+在model里还需要有如下方法：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nx">Model</span><span class="p">.</span><span class="nx">pototype</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">add</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="p">.....</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// at the end</span>
+</span><span class='line'>      <span class="k">this</span><span class="p">.</span><span class="nx">fireEvent</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">on</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">hasEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)){</span>
+</span><span class='line'>        <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Event</span><span class="p">(</span><span class="nx">handler</span><span class="p">,</span> <span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">]){</span>
+</span><span class='line'>          <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Array</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">e</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//private</span>
+</span><span class='line'>    <span class="nx">fireEvent</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">hasEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)){</span>
+</span><span class='line'>        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">].</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">e</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">listener</span><span class="p">[</span><span class="nx">event</span><span class="p">][</span><span class="nx">i</span><span class="p">];</span>
+</span><span class='line'>          <span class="nx">e</span><span class="p">.</span><span class="nx">handler</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">scope</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//private</span>
+</span><span class='line'>    <span class="nx">hasEvent</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">event</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">event</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>其中private表示此方法不对外提供,
+hasEvent是为了判断传入的事件是否是model中注册的事件,
+fireEvent是在model在内部调用，用以调用在view在model注册的handler,
+on是提供对外的接口，用来让view调用，注册view的handler，
+add是model事件函数示例，在让model发生改变的方法中的最下面调用fireEvent，从而达到调用handler的目的。</p>
+
+<p>ps:不负责任的说，Event对象的options参数是我在写这篇文章时候才加进去的，没有经过任何测试，哇哈哈。</p>
+
+<p>ps:再不负责的说，上述方法都是我凭印象写的，正确性应该是可以保证的吧····</p>
+
+<h4>view的写法</h4>
+
+<p>在view中我们需要向model中注册当model发生改变是自动执行的函数，也就是handler.</p>
+
+<p>示例代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="kd">function</span> <span class="nx">View</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>   <span class="k">this</span><span class="p">.</span><span class="nx">model</span> <span class="o">=</span> <span class="nx">model</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Model</span><span class="p">();</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">view</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">View</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">view</span><span class="p">.</span><span class="nx">addView</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">//something for handle while model fire</span>
+</span><span class='line'>    <span class="p">.....</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">view</span><span class="p">.</span><span class="nx">addHandler</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="p">.</span><span class="nx">model</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;add&#39;</span><span class="p">,</span> <span class="nx">addView</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">view</span><span class="p">.</span><span class="nx">addHandler</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>view的写法有多种，大意就是调用model的on函数。</p>
+
+<h3>小结</h3>
+
+<p>observer的好处在于，当model（或者是其他对象）变化的时候，它能通知到其他注册在上面的对象也发生变化。
+这样一方面是全部对象更新的很及时，另一方面是解耦了对象，model（被观察对象？）与view（观察对象？）只需要通过
+model的几个函数交互，而不需要知道其他对象的实现细节,同时view可以注册多个handler到model中去，可扩展性比较好。</p>
+
+<p>ps:我还是不知道model与view是谁观察谁·····</p>
+
+<p>ps：文笔感觉还是很不行，见谅见谅。</p>
+]]></content>
+  </entry>
   
-</aside>
+  <entry>
+    <title type="html"><![CDATA[myql自定义配置]]></title>
+    <link href="http://linkct.me/blog/2012/03/11/sui-bi/"/>
+    <updated>2012-03-11T10:46:00+08:00</updated>
+    <id>http://linkct.me/blog/2012/03/11/sui-bi</id>
+    <content type="html"><![CDATA[<h3>mysql配置</h3>
 
-    </div>
-  </div>
-  <footer role="contentinfo"><div style="display:inline">
-    Copyright &copy; 2013
+<p>在mac下默认是没有my.conf的，如果需要定制的话，可以
+到/usr/local/Cellar/mysql/5.XX/support-file/目录下
+拷贝一份适合的.conf文件到/etc/my.conf</p>
 
-    cantin
-. Powered by <a href="http://octopress.org">Octopress</a> | 
-    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
-</div>
+<h3>mysql默认编码</h3>
 
-</footer>
+<p>mysql在mac下的默认编码是utf-8（在我机子上是），
+可以使用show varibles like &lsquo;character_set%&rsquo;;来查询</p>
+]]></content>
+  </entry>
   
-
-<script type="text/javascript">
-      var disqus_shortname = 'cantin';
-      
-        
-        var disqus_script = 'count.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
-
-
-
-
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
-
-
-</body>
-</html>
+</feed>

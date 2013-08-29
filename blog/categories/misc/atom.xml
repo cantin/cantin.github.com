@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: misc | cantin's blog]]></title>
+  <link href="http://linkct.me/blog/categories/misc/atom.xml" rel="self"/>
+  <link href="http://linkct.me/"/>
+  <updated>2013-08-29T15:46:02+08:00</updated>
+  <id>http://linkct.me/</id>
+  <author>
+    <name><![CDATA[cantin]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[resize_disk_in_virtualbox]]></title>
+    <link href="http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox/"/>
+    <updated>2013-08-28T17:21:00+08:00</updated>
+    <id>http://linkct.me/blog/2013/08/28/resize-disk-in-virtualbox</id>
+    <content type="html"><![CDATA[<h3>resize disk in virtualbox</h3>
+
+<p>首先我们要在VirtualBox里面扩容我们的镜像。
+VirtualBox本身有自带的command tool，利用它们可以很方便的配置镜像。</p>
+
+<p>进入你的镜像目录，找到.vdi文件，执行下列命令：</p>
+
+<p><code>bash
+VBoxManage modifyhd Centos-64bit-disk.vdi --resize 18432
+＃18432 ＝ 18 ＊ 1024, resize to 18G
+</code></p>
+
+<p>Note： 如果你的文件是.vmdk格式，那么需要先转换成.vdi,
+然后替换掉原来的硬盘镜像。
+<code>bash
+VBoxManage clonehd Centos-64bit-disk1.vmdk Centos-64bit-disk1.vdi --format vdi
+</code></p>
+
+<p>至此，你的disk image已经在VirtualBox中被扩展到18G，下一步就是要让Centos扩容。</p>
+
+<h3>apply resize in Centos</h3>
+
+<p>要在Centos里面扩容，首先要知道你的分区情况。</p>
+
+<p>Centos 6.4默认的分区方式是两个：
+/dev/sda1挂载了/boot，大小约为500M，
+剩余的硬盘都在/dev/sda2，由LVM统一管理。</p>
+
+<p>LVM（Logical Volume Manager）建立在硬盘和分区之上的一个逻辑层，来提高磁盘分 区管理的灵活性.</p>
+
+<p>默认的LVM有两个分区，一个是vg_livedvd-lv_root，数据都在这里面，另一个是vg_livedvd-lv_swap，用以缓存。</p>
+
+<p>所以，在Centos扩容，首先要扩展分区容量，然后在扩展LVM的容量。</p>
+
+<p>分区容量可以使用<a href="http://gparted.sourceforge.net">gparted</a>来扩容。
+将分区容量扩大后，就可以开始处理LVM。</p>
+
+<p>打开虚拟机，输入命令：</p>
+
+<p>```bash
+lvextend -L15G /dev/mapper/vg_livedvd-lv_root</p>
+
+<h1>extend vg_livedvd-lv_root to 15G</h1>
+
+<p>resize2fs vg_livedvd-lv_root
+```</p>
+
+<p>这样子vg_livedvd-lv_root就变成了15G大小了。</p>
+]]></content>
+  </entry>
+  
+</feed>

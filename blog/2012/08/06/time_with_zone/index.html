@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>time_with_zone - cantin's blog</title>
+  <meta name="author" content="cantin">
+
+  
+  <meta name="description" content="time_with_zone 在rails中，server time跟传入的time参数在转化有时候会造成一些问题。 time rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间 比如: utc为：&#8217;2012-08-08 12:00:00&# &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://linkct.me/blog/2012/08/06/time_with_zone">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="cantin's blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  
+  
+
+</head>
+
+<body   >
+  <header role="banner">
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:linkct.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<!-- use full url including 'index.html' for navigation bar if you are using ajax -->
+<ul id="nav">
+	<li id="ajax"><a href="/index.html">Home</a></li>
+	<li id="ajax"><a href="/blog/archives/index.html">Archives</a></li>
+    <li><a href="/atom.xml">RSS</a></li>
+    
+    <li>
+    <div id="dark">
+        <form method="get" action="/search.html" id="search">
+            <input name="query" type="text" placeholder="Search..." x-webkit-speech />
+        </form>
+    </div>
+    </li>
+        
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Time_with_zone</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T21:04:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>time_with_zone</h3>
+
+<p>在rails中，server time跟传入的time参数在转化有时候会造成一些问题。</p>
+
+<h3>time</h3>
+
+<p>rails默认使用utc的时区存放time，但是在server中需要使用时区设置转换成本地时间</p>
+
+<p>比如: utc为：&#8217;2012-08-08 12:00:00&#8217;,
+而时区设置是：config.time_zone = &lsquo;Beijing&rsquo;, 即&#8217;+0800&#8217;
+那么当我们在console取出来事：&#8217;2012-08-08 20:00:00 +0800&#8217;</p>
+
+<p>但是，有时候也会出现不一致的情况</p>
+
+<h3>time params with zone</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">params</span><span class="o">[</span><span class="ss">:time</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 12:00:00 +0700&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当上述params传入并save时，在console中取到的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 13:00:00 UTC&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#changed to local_time</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;2012-08-08 21:00:00&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>时间就多了一个小时，这是因为time中的&#8217;+0700&#8217;</p>
+
+<p>当attribute是datetime时，rails会调用Time.zone.parse(original_time)与time.in_time_zone
+<a href="https://github.com/rails/rails/blob/master/activerecord/lib/active_record/attribute_methods/time_zone_conversion.rb#L59">link</a></p>
+
+<p>当没有时区参数的时候，time默认是utc的时区，所以当本地时区是+0800时,
+它会减去8小时，将time从utc格式转换为+0800时区的格式。</p>
+
+<p>而当有参数时(如+0700)，time就是+0700时区的，会从+0700转换成+0800, 然后rails取出数据的话
+默认是使用utc取出的，即会加上8小时,所以time就出现了错误。</p>
+
+<p>如果要加上+0700的话，应该在application.rb中添加:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">active_record</span><span class="o">.</span><span class="n">default_timezone</span> <span class="o">=</span> <span class="s1">&#39;#something respond to +0700&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后存入跟取出的time就会一致了</p>
+
+<h3>后记</h3>
+
+<p>这个是time存入跟取出使用了两种不同时区而导致的错误</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">cantin</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-08-06T21:04:00+08:00" pubdate data-updated="true">Aug 6<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/time/'>time</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://linkct.me/blog/2012/08/06/time_with_zone/" data-via="" data-counturl="http://linkct.me/blog/2012/08/06/time_with_zone/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/27/proc-block/" title="Previous Post: proc block">&laquo; proc block</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/08/18/delayed-job/" title="Next Post: delayed-job">delayed-job &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize_disk_in_virtualbox</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/08/same-origin-policy/">Same Origin Policy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/18/ruby-exception/">Ruby Raise Exception</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/12/10/install-apple-gcc42/">Install_apple_gcc42</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">Jquery-rails-monkey-patch</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+<section>
+  <h1>On Delicious</h1>
+  <div id="delicious"></div>
+  <script type="text/javascript" src="http://feeds.delicious.com/v2/json/cantin?count=3&amp;sort=date&amp;callback=renderDeliciousLinks"></script>
+  <p><a href="http://delicious.com/cantin">My Delicious Bookmarks &raquo;</a></p>
+</section>
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><div style="display:inline">
+    Copyright &copy; 2013
+
+    cantin
+. Powered by <a href="http://octopress.org">Octopress</a> | 
+    Theme <a href="http://github.com/panks/fabric">fabric</a> by <a href="http://panks.me">Pankaj Kumar</a>
+</div>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'cantin';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://linkct.me/blog/2012/08/06/time_with_zone/';
+        var disqus_url = 'http://linkct.me/blog/2012/08/06/time_with_zone/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+</body>
+</html>

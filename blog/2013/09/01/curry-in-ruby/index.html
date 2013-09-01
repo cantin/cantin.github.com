@@ -5,19 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>proc block - Cantin's blog</title>
+  <title>Currying in Ruby - Cantin's blog</title>
   <meta name="author" content="Cantin">
 
   
-  <meta name="description" content="Proc 在ruby中，block是一种隐形的方法参数, 而不是对象，在方法中直接调用不到，
-，但是在方法中可以将其转化为proc对象，从而可以使用proc的方法。 &amp;操作符 block转化为proc的方法是&amp;操作符 block转化proc 1
-2
-3
-4
-5
-6
-7
-def &hellip;">
+  <meta name="description" content="Currying Currying is the technique of transforming a function that takes multiple arguments (or a tuple of arguments) in such a way that it can be &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -26,7 +18,7 @@ def &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://linkct.me/blog/2012/07/27/proc-block">
+  <link rel="canonical" href="http://linkct.me/blog/2013/09/01/curry-in-ruby">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Cantin's blog" type="application/atom+xml">
@@ -88,7 +80,7 @@ def &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Proc Block</h1>
+      <h1 class="entry-title">Currying in Ruby</h1>
     
     
       <p class="meta">
@@ -104,7 +96,7 @@ def &hellip;">
   
 
 
-<time datetime="2012-07-27T21:23:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2012</time>
+<time datetime="2013-09-01T13:26:00+08:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -113,39 +105,11 @@ def &hellip;">
   </header>
 
 
-<div class="entry-content"><h3>Proc</h3>
+<div class="entry-content"><h3>Currying</h3>
 
-<p>在ruby中，block是一种隐形的方法参数, 而不是对象，在方法中直接调用不到，
-，但是在方法中可以将其转化为proc对象，从而可以使用proc的方法。</p>
+<p> <a href="http://en.wikipedia.org/wiki/Currying">Currying</a> is the technique of transforming a function that takes multiple arguments (or a tuple of arguments) in such a way that it can be called as a chain of functions, each with a single argument .</p>
 
-<h3>&amp;操作符</h3>
-
-<p>block转化为proc的方法是&amp;操作符</p>
-
-<h4>block转化proc</h4>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">block</span><span class="o">.</span><span class="n">class</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">method</span> <span class="p">{}</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">=&gt;</span> <span class="no">Proc</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>此时的{} 是隐形的参数，method的表面参数是为0，如果传入的是proc对象，
-proc对象是表面的参数，则会报ArgumentError: wrong number of arguments (1
-for 0)</p>
-
-<h4>proc转化为block</h4>
+<p>For instance:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -156,48 +120,64 @@ for 0)</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">method</span>
-</span><span class='line'>  <span class="k">yield</span> <span class="k">if</span> <span class="nb">block_given?</span>
-</span><span class='line'><span class="k">end</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="nx">z</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="nb">p</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="nb">puts</span> <span class="s1">&#39;proc&#39;</span> <span class="p">}</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">add5</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="nb">method</span> <span class="o">&amp;</span><span class="nb">p</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">add5and6</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">add5</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="nx">z</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="o">=&gt;</span> <span class="nb">proc</span>
+</span><span class='line'><span class="nx">add5and6</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">21</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>此时的proc经过&amp;转换，在method中变为block隐形的参数。
-另：&amp;p不可以单独使用, 不可在表达式中使用，如</p>
+<h3>Currying in Proc of Ruby</h3>
+
+<p>In Ruby, Object is the first class, but we still can use it as FP.</p>
+
+<p>Proc is kind of like function, Ruby provide a method named currying in Proc.
+This give us a easy way to currying proc like currying function.</p>
+
+<p>Baisc Usage:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&amp;</span><span class="nb">p</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="n">syntax</span> <span class="n">error</span><span class="p">,</span> <span class="n">unexpected</span> <span class="n">tAMPER</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">add</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="p">}</span>
+</span><span class='line'><span class="n">add5</span> <span class="o">=</span> <span class="n">add</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="n">add5and6</span> <span class="o">=</span> <span class="n">add5</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">6</span><span class="o">]</span> <span class="c1"># equal to add.curry.call(5).call(6)</span>
 </span><span class='line'>
-</span><span class='line'><span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="o">&amp;</span><span class="nb">p</span> <span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'><span class="o">=&gt;</span> <span class="n">syntax</span> <span class="n">error</span><span class="p">,</span> <span class="n">unexpected</span> <span class="n">tAMPER</span>
+</span><span class='line'><span class="n">add5and6</span><span class="o">.</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">21</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>但是可以</p>
+<p>Proc#curry also can take one argument(arity) that limit the quantity of arguments.</p>
+
+<p>For instance:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="ss">:method</span><span class="p">,</span> <span class="o">&amp;</span><span class="nb">p</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">=&gt;</span> <span class="nb">proc</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">add</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="n">add5</span> <span class="o">=</span> <span class="nb">proc</span><span class="o">.</span><span class="n">curry</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="n">add5and6</span> <span class="o">=</span> <span class="n">add5</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">6</span><span class="o">]</span> <span class="o">=&gt;</span> <span class="mi">11</span>
+</span><span class='line'><span class="c1"># z will be ignored cause by the arity is 2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h3>结语</h3>
-
-<p>proc，lamdba，block还是很多不得不说的事&hellip;.</p>
+<p>Note: the arity argument in Lambda#curry must equal to the number of arguments in Lambda, otherwise it will raise a ArgumentError.</p>
 </div>
 
 
@@ -220,12 +200,12 @@ for 0)</p>
   
 
 
-<time datetime="2012-07-27T21:23:00+08:00" pubdate data-updated="true">Jul 27<span>th</span>, 2012</time>
+<time datetime="2013-09-01T13:26:00+08:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/block/'>block</a>, <a class='category' href='/blog/categories/proc/'>proc</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+    <a class='category' href='/blog/categories/ruby/'>Ruby</a>
   
 </span>
 
@@ -234,7 +214,7 @@ for 0)</p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://linkct.me/blog/2012/07/27/proc-block/" data-via="" data-counturl="http://linkct.me/blog/2012/07/27/proc-block/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://linkct.me/blog/2013/09/01/curry-in-ruby/" data-via="" data-counturl="http://linkct.me/blog/2013/09/01/curry-in-ruby/" >Tweet</a>
   
   
   
@@ -243,10 +223,8 @@ for 0)</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/05/16/bundler-open/" title="Previous Post: bundler open">&laquo; bundler open</a>
+        <a class="basic-alignment left" href="/blog/2013/08/28/resize-disk-in-virtualbox/" title="Previous Post: Resize disk in VirtualBox">&laquo; Resize disk in VirtualBox</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/08/06/time_with_zone/" title="Next Post: time_with_zone">time_with_zone &raquo;</a>
       
     </p>
   </footer>
@@ -320,8 +298,8 @@ for 0)</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://linkct.me/blog/2012/07/27/proc-block/';
-        var disqus_url = 'http://linkct.me/blog/2012/07/27/proc-block/';
+        var disqus_identifier = 'http://linkct.me/blog/2013/09/01/curry-in-ruby/';
+        var disqus_url = 'http://linkct.me/blog/2013/09/01/curry-in-ruby/';
         var disqus_script = 'embed.js';
       
     (function () {

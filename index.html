@@ -9,10 +9,7 @@
   <meta name="author" content="Cantin">
 
   
-  <meta name="description" content="resize disk in virtualbox 首先我们要在VirtualBox里面扩容我们的镜像。
-VirtualBox本身有自带的command tool，利用它们可以很方便的配置镜像。 进入你的镜像目录，找到.vdi文件，执行下列命令： 1
-2
-VBoxManage modifyhd &hellip;">
+  <meta name="description" content="Currying Currying is the technique of transforming a function that takes multiple arguments (or a tuple of arguments) in such a way that it can be &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +77,116 @@ VBoxManage modifyhd &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/01/curry-in-ruby/">Currying in Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-01T13:26:00+08:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
+        
+         | <a href="/blog/2013/09/01/curry-in-ruby/#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Currying</h3>
+
+<p> <a href="http://en.wikipedia.org/wiki/Currying">Currying</a> is the technique of transforming a function that takes multiple arguments (or a tuple of arguments) in such a way that it can be called as a chain of functions, each with a single argument .</p>
+
+<p>For instance:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="nx">z</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">add5</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">add5and6</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">add5</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="nx">z</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">add5and6</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">21</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Currying in Proc of Ruby</h3>
+
+<p>In Ruby, Object is the first class, but we still can use it as FP.</p>
+
+<p>Proc is kind of like function, Ruby provide a method named currying in Proc.
+This give us a easy way to currying proc like currying function.</p>
+
+<p>Baisc Usage:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">add</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="p">}</span>
+</span><span class='line'><span class="n">add5</span> <span class="o">=</span> <span class="n">add</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="n">add5and6</span> <span class="o">=</span> <span class="n">add5</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">6</span><span class="o">]</span> <span class="c1"># equal to add.curry.call(5).call(6)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">add5and6</span><span class="o">.</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">21</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Proc#curry also can take one argument(arity) that limit the quantity of arguments.</p>
+
+<p>For instance:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">add</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="n">add5</span> <span class="o">=</span> <span class="nb">proc</span><span class="o">.</span><span class="n">curry</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="n">add5and6</span> <span class="o">=</span> <span class="n">add5</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">6</span><span class="o">]</span> <span class="o">=&gt;</span> <span class="mi">11</span>
+</span><span class='line'><span class="c1"># z will be ignored cause by the arity is 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: the arity argument in Lambda#curry must equal to the number of arguments in Lambda, otherwise it will raise a ArgumentError.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1335,141 +1442,6 @@ for 0)</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/22/js_function/">Function Js</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-22T22:49:00+08:00" pubdate data-updated="true">Mar 22<span>nd</span>, 2012</time>
-        
-         | <a href="/blog/2012/03/22/js_function/#disqus_thread">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>object</h3>
-
-<p>在js中object就是key: value的集合。</p>
-
-<p>function对象也是object对象，但是他们都是以function关键字定义滴。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'>  <span class="nb">Object</span> <span class="c1">//function Object() {};</span>
-</span><span class='line'>  <span class="nb">Function</span> <span class="c1">//function Function() {};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>每一个object里面都会有个constructor的key，value一般就是object的function引用。
-例如：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obkect</span><span class="p">();</span>
-</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Object() {}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>function, new 与Object, Function</h3>
-
-<p> function与Function是不同的，function是关键字，而Function是对象。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ss&#39;</span> <span class="p">}</span>
-</span><span class='line'><span class="nx">s</span>  <span class="c1">//function s() { this.qq = &#39;ss&#39; }</span>
-</span><span class='line'><span class="nx">s</span><span class="p">.</span><span class="nx">constructor</span> <span class="c1">// function Function() {}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>所有的function对象都是由Function这个对象创建出来的。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">};</span>
-</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">s</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>与下面代码应该相等：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;ww&#39;</span> <span class="p">}</span>
-</span><span class='line'> <span class="kd">var</span> <span class="nx">o</span> <span class="o">=</span> <span class="p">{};</span>
-</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span><span class='line'> <span class="nx">o</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">=</span> <span class="nx">s</span>
-</span><span class='line'> <span class="mi">0</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">=</span> <span class="nx">s</span><span class="p">.</span><span class="nx">prototype</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{</span> <span class="k">this</span><span class="p">.</span><span class="nx">qq</span> <span class="o">=</span> <span class="s1">&#39;asd&#39;</span> <span class="p">};</span>
-</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span>
-</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">qq</span><span class="p">;</span>     <span class="c1">// &#39;asd&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3><strong>proto</strong></h3>
-
-<p>object都有<strong>proto</strong>属性，其中保存着constructor的prototype</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='js'><span class='line'> <span class="c1">//在chrome下</span>
-</span><span class='line'> <span class="kd">function</span> <span class="nx">s</span><span class="p">()</span> <span class="p">{}</span>
-</span><span class='line'> <span class="nx">s</span><span class="p">.</span><span class="nx">__proto__</span>  <span class="c1">// function Empty() {}</span>
-</span><span class='line'> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// function Empty() {}</span>
-</span><span class='line'> <span class="nb">Function</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">// function Empty() {}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>prototype</h3>
-
-<p>function对象的属性存放处</p>
-
-<h3>function, object</h3>
-
-<p>object拥有constructor，<strong>proto</strong>属性
-function除了拥有上述属性，还拥有prototype属性,还拥有call，apply方法</p>
-
-<h3>后记</h3>
-
-<p>写的还真烂······</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1485,6 +1457,10 @@ function除了拥有上述属性，还拥有prototype属性,还拥有call，appl
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/09/01/curry-in-ruby/">Currying in Ruby</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/08/28/resize-disk-in-virtualbox/">Resize disk in VirtualBox</a>
       </li>
     
@@ -1498,10 +1474,6 @@ function除了拥有上述属性，还拥有prototype属性,还拥有call，appl
     
       <li class="post">
         <a href="/blog/2012/12/10/install-apple-gcc42/">install_apple_gcc42</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/11/26/jquery-rails-monkey-patch/">jquery-rails-monkey-patch</a>
       </li>
     
   </ul>

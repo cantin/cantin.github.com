@@ -4,7 +4,7 @@
   <title><![CDATA[Cantin's blog]]></title>
   <link href="http://linkct.me/atom.xml" rel="self"/>
   <link href="http://linkct.me/"/>
-  <updated>2013-08-29T16:05:20+08:00</updated>
+  <updated>2013-09-01T13:58:32+08:00</updated>
   <id>http://linkct.me/</id>
   <author>
     <name><![CDATA[Cantin]]></name>
@@ -12,6 +12,87 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Currying in Ruby]]></title>
+    <link href="http://linkct.me/blog/2013/09/01/curry-in-ruby/"/>
+    <updated>2013-09-01T13:26:00+08:00</updated>
+    <id>http://linkct.me/blog/2013/09/01/curry-in-ruby</id>
+    <content type="html"><![CDATA[<h3>Currying</h3>
+
+<p> <a href="http://en.wikipedia.org/wiki/Currying">Currying</a> is the technique of transforming a function that takes multiple arguments (or a tuple of arguments) in such a way that it can be called as a chain of functions, each with a single argument .</p>
+
+<p>For instance:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='js'><span class='line'><span class="kd">function</span> <span class="nx">add</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">x</span> <span class="o">+</span> <span class="nx">y</span> <span class="o">+</span> <span class="nx">z</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">add5</span><span class="p">(</span><span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">add</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">z</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">add5and6</span><span class="p">(</span><span class="nx">z</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">add5</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="nx">z</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">add5and6</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">21</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Currying in Proc of Ruby</h3>
+
+<p>In Ruby, Object is the first class, but we still can use it as FP.</p>
+
+<p>Proc is kind of like function, Ruby provide a method named currying in Proc.
+This give us a easy way to currying proc like currying function.</p>
+
+<p>Baisc Usage:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">add</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="n">z</span> <span class="p">}</span>
+</span><span class='line'><span class="n">add5</span> <span class="o">=</span> <span class="n">add</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="n">add5and6</span> <span class="o">=</span> <span class="n">add5</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">6</span><span class="o">]</span> <span class="c1"># equal to add.curry.call(5).call(6)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">add5and6</span><span class="o">.</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="mi">21</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Proc#curry also can take one argument(arity) that limit the quantity of arguments.</p>
+
+<p>For instance:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">add</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">|</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">z</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="n">add5</span> <span class="o">=</span> <span class="nb">proc</span><span class="o">.</span><span class="n">curry</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">[</span><span class="mi">5</span><span class="o">]</span>
+</span><span class='line'><span class="n">add5and6</span> <span class="o">=</span> <span class="n">add5</span><span class="o">.</span><span class="n">curry</span><span class="o">[</span><span class="mi">6</span><span class="o">]</span> <span class="o">=&gt;</span> <span class="mi">11</span>
+</span><span class='line'><span class="c1"># z will be ignored cause by the arity is 2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: the arity argument in Lambda#curry must equal to the number of arguments in Lambda, otherwise it will raise a ArgumentError.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Resize disk in VirtualBox]]></title>
